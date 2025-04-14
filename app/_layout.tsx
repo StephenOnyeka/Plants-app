@@ -1,52 +1,47 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import "react-native-reanimated";
+import { useFonts } from "expo-font";
+import { Text } from "react-native";
 import "../global.css";
 
-import { useColorScheme } from "@/hooks/useColorScheme";
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  const [fontsLoaded] = useFonts({
+    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
+    PoppinsItalic: require("../assets/fonts/Poppins-Italic.ttf"),
+    PoppinsBoldItalic: require("../assets/fonts/Poppins-BoldItalic.ttf"),
+    PoppinsLight: require("../assets/fonts/Poppins-Light.ttf"),
+    PoppinsLightItalic: require("../assets/fonts/Poppins-LightItalic.ttf"),
+    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsMediumItalic: require("../assets/fonts/Poppins-MediumItalic.ttf"),
+    PoppinsThin: require("../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsThinItalic: require("../assets/fonts/Poppins-ThinItalic.ttf"),
+    PoppinsExtraLight: require("../assets/fonts/Poppins-ExtraLight.ttf"),
+    PoppinsExtraLightItalic: require("../assets/fonts/Poppins-ExtraLightItalic.ttf"),
+    PoppinsExtraBold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
+    PoppinsExtraBoldItalic: require("../assets/fonts/Poppins-ExtraBoldItalic.ttf"),
+    PoppinsBlack: require("../assets/fonts/Poppins-Black.ttf"),
+    PoppinsBlackItalic: require("../assets/fonts/Poppins-BlackItalic.ttf"),
+    PoppinsSemiBoldItalic: require("../assets/fonts/Poppins-SemiBoldItalic.ttf"),
   });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
+  if (!fontsLoaded) {
+    return null; // Show a loading screen or return null while fonts are loading
   }
 
+  // Set default font for all Text components
+  (Text as any).defaultProps = (Text as any).defaultProps || {};
+  (Text as any).defaultProps.style = { fontFamily: "Poppins" };
+
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName="demo">
-        <Stack.Screen
-          name="demo"
-          options={{ headerShown: false }}
-        />
-        {/* <Stack.Screen
-          name="OnboardingScreen"
-          options={{ headerShown: false }}
-        /> */}
+    <>
+      <Stack initialRouteName="index">
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="dark" />
-    </ThemeProvider>
+      <StatusBar style="light" />
+    </>
   );
 }
