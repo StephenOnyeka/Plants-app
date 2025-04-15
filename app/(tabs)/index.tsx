@@ -12,6 +12,7 @@ import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Carousel from 'react-native-snap-carousel';
+// import CarouselLib from 'react-native-snap-carousel'
 import CustomText from "@/components/CustomText";
 
 type Plant = {
@@ -90,24 +91,47 @@ const plantData: Plant[] = [
   },
 ];
 
-const renderPlantCard = ({ item }: { item: Plant }) => (
-  <View style={{ alignItems: "center", padding: 10 }}>
-    <Image
-      source={item.image}
-      style={{ width: 150, height: 150, borderRadius: 10 }}
-    />
-    <CustomText className="text-lg font-PoppinsSemiBold mt-2">
-      {item.title}
-    </CustomText>
-    <CustomText className="text-sm text-gray-500">
-      {item.description}
-    </CustomText>
-    <CustomText className="text-sm text-gray-500">
-      Category: {item.category}
-    </CustomText>
-    <CustomText className="text-sm text-yellow-500">⭐ {item.stars}</CustomText>
-  </View>
-);
+// const renderPlantCard = ({ item }: { item: Plant }) => (
+//   <View style={{ alignItems: "center", padding: 10 }}>
+//     <Image
+//       source={item.image}
+//       style={{ width: 150, height: 150, borderRadius: 10 }}
+//     />
+//     <CustomText className="text-lg font-PoppinsSemiBold mt-2">
+//       {item.title}
+//     </CustomText>
+//     <CustomText className="text-sm text-gray-500">
+//       {item.description}
+//     </CustomText>
+//     <CustomText className="text-sm text-gray-500">
+//       Category: {item.category}
+//     </CustomText>
+//     <CustomText className="text-sm text-yellow-500">⭐ {item.stars}</CustomText>
+//   </View>
+// );
+const renderPlantCard = ({ item }: { item: Plant }) => {
+  console.log(item); // Debugging
+  return (
+    <View style={{ alignItems: "center", padding: 10 }}>
+      <Image
+        source={item.image}
+        style={{ width: 150, height: 150, borderRadius: 10 }}
+      />
+      <CustomText className="text-lg font-PoppinsSemiBold mt-2">
+        {item.title}
+      </CustomText>
+      <CustomText className="text-sm text-gray-500">
+        {item.description}
+      </CustomText>
+      <CustomText className="text-sm text-gray-500">
+        Category: {item.category}
+      </CustomText>
+      <CustomText className="text-sm text-yellow-500">
+        ⭐ {item.stars}
+      </CustomText>
+    </View>
+  );
+};
 
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
@@ -205,6 +229,14 @@ export default function HomeScreen() {
             />
           </View>
           <View style={{ marginVertical: 20 }}>
+            {/* <Carousel
+              data={plantData}
+              renderItem={renderPlantCard}
+              sliderWidth={300}
+              itemWidth={200}
+              loop={true}
+              layout={'default'}
+            /> */}
             <Carousel
               data={plantData}
               renderItem={renderPlantCard}
