@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  Text,
 } from "react-native";
 import { categories } from "@/constants";
 import { useState } from "react";
@@ -91,43 +92,33 @@ const plantData: Plant[] = [
   },
 ];
 
-// const renderPlantCard = ({ item }: { item: Plant }) => (
-//   <View style={{ alignItems: "center", padding: 10 }}>
-//     <Image
-//       source={item.image}
-//       style={{ width: 150, height: 150, borderRadius: 10 }}
-//     />
-//     <CustomText className="text-lg font-PoppinsSemiBold mt-2">
-//       {item.title}
-//     </CustomText>
-//     <CustomText className="text-sm text-gray-500">
-//       {item.description}
-//     </CustomText>
-//     <CustomText className="text-sm text-gray-500">
-//       Category: {item.category}
-//     </CustomText>
-//     <CustomText className="text-sm text-yellow-500">⭐ {item.stars}</CustomText>
-//   </View>
-// );
 const renderPlantCard = ({ item }: { item: Plant }) => {
   return (
-    <View style={{ alignItems: "center", padding: 10 }} className="bg-green-700 rounded-2xl" >
-      <Image
-        source={item.image}
-        style={{ width: 150, height: 150, borderRadius: 10 }}
-      />
-      <CustomText className="text-lg font-PoppinsSemiBold mt-2">
+    <View className="bg-green-700 rounded-3xl p-6 px-8 ">
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Image source={item.image} className="w-[100%] h-64 rounded-2xl" />
+      </View>
+      <CustomText
+        className="text-3xl mt-6 text-white"
+        style={{ fontFamily: "PoppinsSemiBold" }}
+      >
         {item.title}
       </CustomText>
-      <CustomText className="text-sm text-white">
-        {item.description}
-      </CustomText>
-      <CustomText className="text-sm text-white">
+      {/* <CustomText className="text-white" style={{fontFamily:"PoppinsItalic"}} > */}
+      <CustomText className="text-white" style={{ fontFamily: "Poppins" }}>
         Category: {item.category}
       </CustomText>
-      <CustomText className="text-sm text-yellow-500">
-        ⭐ {item.stars}
-      </CustomText>
+      <View className="flex flex-row items-center justify-between">
+        <View className="flex flex-row items-center gap-2 font-bold bg-green-200 rounded-full p-2 px-4 self-start mt-2">
+          <Ionicons name="star" size={12} color={"green"} />
+          <Text className=" text-green-700" style={{fontFamily:""}} >
+            {item.stars}
+          </Text>
+        </View>
+        <View className="border border-white rounded-full p-1">
+          <Ionicons name="cart-outline" size={20} color={"white"}/>
+        </View>
+      </View>
     </View>
   );
 };
@@ -167,9 +158,10 @@ export default function HomeScreen() {
                 className="rounded-full"
               />
               <Ionicons
-                name="cart-outline"
+                name="person-circle"
                 size={30}
                 className="rounded-full"
+                // color={"green"}
               />
             </View>
             <View className="flex-1 mt-4">
@@ -229,14 +221,6 @@ export default function HomeScreen() {
           </View>
 
           <View style={{}} className="mt-8">
-            {/* <Carousel
-              data={plantData}
-              renderItem={renderPlantCard}
-              sliderWidth={300}
-              itemWidth={200}
-              loop={true}
-              layout={'default'}
-            /> */}
             <Carousel
               data={plantData}
               renderItem={renderPlantCard}
