@@ -110,9 +110,8 @@ const plantData: Plant[] = [
 //   </View>
 // );
 const renderPlantCard = ({ item }: { item: Plant }) => {
-  console.log(item); // Debugging
   return (
-    <View style={{ alignItems: "center", padding: 10 }}>
+    <View style={{ alignItems: "center", padding: 10 }} className="bg-green-700 rounded-2xl" >
       <Image
         source={item.image}
         style={{ width: 150, height: 150, borderRadius: 10 }}
@@ -120,10 +119,10 @@ const renderPlantCard = ({ item }: { item: Plant }) => {
       <CustomText className="text-lg font-PoppinsSemiBold mt-2">
         {item.title}
       </CustomText>
-      <CustomText className="text-sm text-gray-500">
+      <CustomText className="text-sm text-white">
         {item.description}
       </CustomText>
-      <CustomText className="text-sm text-gray-500">
+      <CustomText className="text-sm text-white">
         Category: {item.category}
       </CustomText>
       <CustomText className="text-sm text-yellow-500">
@@ -228,7 +227,8 @@ export default function HomeScreen() {
               }}
             />
           </View>
-          <View style={{ marginVertical: 20 }}>
+
+          <View style={{}} className="mt-8">
             {/* <Carousel
               data={plantData}
               renderItem={renderPlantCard}
@@ -240,10 +240,11 @@ export default function HomeScreen() {
             <Carousel
               data={plantData}
               renderItem={renderPlantCard}
-              sliderWidth={300}
-              itemWidth={200}
+              inactiveSlideOpacity={0.65} // opacity of inactive slides
+              inactiveSlideScale={0.77} //size of inactive slides
+              sliderWidth={350}
+              itemWidth={250}
               loop={true}
-              layout={'default'}
             />
           </View>
         </ScrollView>
