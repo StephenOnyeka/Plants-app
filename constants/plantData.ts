@@ -1,0 +1,68 @@
+const plantData = [
+  {
+    id: 1,
+    title: "Succulent",
+    description: "Thrives indoors all year round.",
+    category: "Indoor",
+    stars: 4.5,
+    image: require("@/assets/plants/7.jpeg"),
+  },
+  {
+    id: 2,
+    title: "Fiddle Leaf Fig",
+    description: "Perfect for home or office.",
+    category: "Indoor",
+    stars: 4.7,
+    image: require("@/assets/plants/8.jpeg"),
+  },
+  {
+    id: 3,
+    title: "Palm Branch",
+    description: "Adds a tropical vibe.",
+    category: "Outdoor",
+    stars: 4.3,
+    image: require("@/assets/plants/1.jpeg"),
+  },
+  {
+    id: 4,
+    title: "Bird of Paradise",
+    description: "Elegant and vibrant.",
+    category: "Outdoor",
+    stars: 4.8,
+    image: require("@/assets/plants/2.jpeg"),
+  },
+  {
+    id: 5,
+    title: "Artificial Fiddle Leaf",
+    description: "Low maintenance beauty.",
+    category: "Indoor",
+    stars: 4.6,
+    image: require("@/assets/plants/3.jpeg"),
+  },
+  {
+    id: 6,
+    title: "Succulent Vase",
+    description: "Compact and stylish.",
+    category: "Indoor",
+    stars: 4.4,
+    image: require("@/assets/plants/4.jpeg"),
+  },
+  {
+    id: 7,
+    title: "Leafy Green",
+    description: "Fresh and vibrant.",
+    category: "Garden",
+    stars: 4.2,
+    image: require("@/assets/plants/5.jpeg"),
+  },
+  {
+    id: 8,
+    title: "Artificial Palm",
+    description: "Tropical and evergreen.",
+    category: "Outdoor",
+    stars: 4.9,
+    image: require("@/assets/plants/6.jpeg"),
+  },
+];
+
+export default plantData;

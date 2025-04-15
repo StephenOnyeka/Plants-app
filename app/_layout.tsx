@@ -36,8 +36,9 @@ export default function RootLayout() {
 
   return (
     <>
-      <Stack initialRouteName="index">
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+      {/* <Stack initialRouteName="index">
+        <Stack.Screen name="index" options={{ headerShown: false }} /> */}
+      <Stack initialRouteName="(tabs)">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
