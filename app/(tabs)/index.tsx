@@ -14,17 +14,33 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, Fontisto } from "@expo/vector-icons";
 import CustomText from "@/components/CustomText";
 import plantData, { Plant } from "@/constants/plantData";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import React from "react";
 import { FavoritesContext } from "../_layout";
 
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
   const navigation = useNavigation();
+  const router = useRouter();
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
 
   const handleToggleFavorite = (item: Plant) => {
     toggleFavorite(item);
+  };
+
+  const handleProductClick = (product: Plant) => {
+    router.push({
+      pathname: "/productDetails",
+      params: {
+        id: product.id,
+        title: product.title,
+        description: product.description,
+        category: product.category,
+        stars: product.stars,
+        image: product.image,
+        price: product.price,
+      },
+    });
   };
 
   return (
@@ -147,7 +163,10 @@ export default function HomeScreen() {
             data={plantData}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View className="rounded-2xl overflow-hidden w-[48%] mb-4 border border-gray-200">
+              <TouchableOpacity
+                onPress={() => handleProductClick(item)}
+                className="rounded-2xl overflow-hidden w-[48%] mb-4 border border-gray-200"
+              >
                 <View className="w-full bg-white rounded-2xl">
                   <ImageBackground
                     source={item.image}
@@ -185,7 +204,7 @@ export default function HomeScreen() {
                   </CustomText>
                   <CustomText>${item.price}</CustomText>
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
             numColumns={2}
             columnWrapperStyle={{ justifyContent: "space-between" }}

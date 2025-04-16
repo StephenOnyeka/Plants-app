@@ -61,6 +61,10 @@ export default function RootLayout() {
       <Stack initialRouteName="(tabs)">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
+        <Stack.Screen
+          name="productDetails"
+          options={{ presentation: "modal" }}
+        />
       </Stack>
       <StatusBar style="dark" />
     </FavoritesContext.Provider>

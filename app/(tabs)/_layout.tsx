@@ -35,22 +35,21 @@ export default function TabsLayout() {
             ),
             headerShown: false,
           }}
-        />        
+        />
         <Tabs.Screen
           name="cart"
           options={{
             title: "",
             tabBarIcon: ({ focused, color }) => (
               <Ionicons
-                name={
-                  focused ? "cart-sharp" : "cart-outline"
-                }
+                name={focused ? "cart-sharp" : "cart-outline"}
                 size={24}
                 color={color}
               />
             ),
           }}
-        /><Tabs.Screen
+        />
+        <Tabs.Screen
           name="favourite"
           options={{
             title: "",
@@ -63,7 +62,7 @@ export default function TabsLayout() {
             ),
             headerTitle: () => (
               <CustomText className="text-2xl">Favourites</CustomText>
-            )
+            ),
           }}
         />
         <Tabs.Screen
@@ -72,9 +71,7 @@ export default function TabsLayout() {
             title: "",
             tabBarIcon: ({ focused, color }) => (
               <Ionicons
-                name={
-                  focused ? "people-sharp" : "people-outline"
-                }
+                name={focused ? "people-sharp" : "people-outline"}
                 size={24}
                 color={color}
               />
@@ -87,9 +84,7 @@ export default function TabsLayout() {
             title: "",
             tabBarIcon: ({ focused, color }) => (
               <Ionicons
-                name={
-                  focused ? "mail-sharp" : "mail-outline"
-                }
+                name={focused ? "mail-sharp" : "mail-outline"}
                 size={24}
                 color={color}
               />
