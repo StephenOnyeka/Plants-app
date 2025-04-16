@@ -148,7 +148,7 @@ export default function HomeScreen() {
                     <View className="flex flex-row items-center justify-between mt-2">
                       <View className="flex flex-row items-center gap-2 font-bold bg-gray-200 rounded-full p-2 px-4">
                         <Ionicons name="star" size={12} />
-                        <Text className="" style={{ fontFamily: "" }}>
+                        <Text>
                           4.7
                         </Text>
                       </View>

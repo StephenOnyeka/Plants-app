@@ -9,10 +9,17 @@ export default function ProductDetails() {
   const router = useRouter();
   const params = useLocalSearchParams();
 
-  const imageSource =
-    typeof params.image === "string" && params.image.startsWith("http")
-      ? { uri: params.image }
-      : plantData.find((plant) => plant.image === params.image)?.image || null;
+  const imageSource = (() => {
+    const matchedPlant = plantData.find(
+      (plant) => plant.id === Number(params.id)
+    ); // Convert params.id to a number
+    if (matchedPlant) {
+      return matchedPlant.image; // Use the pre-resolved image directly from plantData
+    }
+
+    console.warn("Image source not found for params.id:", params.id);
+    return null;
+  })();
 
   return (
     <View className="p-4 flex-1 bg-white">
