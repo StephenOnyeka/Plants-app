@@ -6,6 +6,7 @@ const plantData = [
     category: "Indoor",
     stars: 4.5,
     image: require("@/assets/plants/7.jpeg"),
+    price: 25.99,
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ const plantData = [
     category: "Indoor",
     stars: 4.7,
     image: require("@/assets/plants/8.jpeg"),
+    price: 45.50,
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const plantData = [
     category: "Outdoor",
     stars: 4.3,
     image: require("@/assets/plants/1.jpeg"),
+    price: 30.00,
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const plantData = [
     category: "Outdoor",
     stars: 4.8,
     image: require("@/assets/plants/2.jpeg"),
+    price: 60.75,
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ const plantData = [
     category: "Indoor",
     stars: 4.6,
     image: require("@/assets/plants/3.jpeg"),
+    price: 20.99,
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ const plantData = [
     category: "Indoor",
     stars: 4.4,
     image: require("@/assets/plants/4.jpeg"),
+    price: 15.49,
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ const plantData = [
     category: "Garden",
     stars: 4.2,
     image: require("@/assets/plants/5.jpeg"),
+    price: 18.25,
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ const plantData = [
     category: "Outdoor",
     stars: 4.9,
     image: require("@/assets/plants/6.jpeg"),
+    price: 50.00,
   },
 ];
 
