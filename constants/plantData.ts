@@ -1,4 +1,14 @@
-const plantData = [
+export type Plant = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  stars: number;
+  image: any;
+  price: number;
+};
+
+const plantData: Plant[] = [
   {
     id: 1,
     title: "Succulent",

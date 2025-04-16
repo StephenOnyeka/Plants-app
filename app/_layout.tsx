@@ -1,8 +1,18 @@
+import React, { createContext, useState } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { Text } from "react-native";
 import "../global.css";
+import { Plant } from "@/constants/plantData";
+
+export const FavoritesContext = createContext<{
+  favorites: Plant[];
+  toggleFavorite: (item: Plant) => void;
+}>({
+  favorites: [],
+  toggleFavorite: () => {},
+});
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -26,6 +36,18 @@ export default function RootLayout() {
     PoppinsSemiBoldItalic: require("../assets/fonts/Poppins-SemiBoldItalic.ttf"),
   });
 
+  const [favorites, setFavorites] = useState<Plant[]>([]);
+
+  const toggleFavorite = (item: Plant) => {
+    setFavorites((prev) => {
+      if (prev.some((fav) => fav.id === item.id)) {
+        return prev.filter((fav) => fav.id !== item.id);
+      } else {
+        return [...prev, item];
+      }
+    });
+  };
+
   if (!fontsLoaded) {
     return null; // Show a loading screen or return null while fonts are loading
   }
@@ -35,14 +57,12 @@ export default function RootLayout() {
   (Text as any).defaultProps.style = { fontFamily: "Poppins" };
 
   return (
-    <>
-      {/* <Stack initialRouteName="index">
-        <Stack.Screen name="index" options={{ headerShown: false }} /> */}
+    <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
       <Stack initialRouteName="(tabs)">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="dark" />
-    </>
+    </FavoritesContext.Provider>
   );
 }

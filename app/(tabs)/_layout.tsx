@@ -1,6 +1,8 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
+import { Text } from "react-native";
+import CustomText from "@/components/CustomText";
 
 export default function TabsLayout() {
   return (
@@ -59,6 +61,9 @@ export default function TabsLayout() {
                 color={color}
               />
             ),
+            headerTitle: () => (
+              <CustomText className="text-2xl">Favourites</CustomText>
+            )
           }}
         />
         <Tabs.Screen
