@@ -53,7 +53,7 @@ export default function Favourite() {
               <View className="flex flex-row justify-between items-center">
                 <CustomText
                   className="text-2xl w-[70%]"
-                  style={{ fontFamily: "PoppinsSemiBold" }}
+                  // style={{ fontFamily: "PoppinsSemiBold" }}
                 >
                   {item.title}
                 </CustomText>
