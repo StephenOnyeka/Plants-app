@@ -46,6 +46,39 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
+          name="people"
+          options={{
+            title: "",
+            tabBarIcon: ({ focused, color }) => (
+              <Ionicons
+                name={focused ? "people-sharp" : "people-outline"}
+                size={24}
+                color={color}
+              />
+            ),
+            headerTitle: () => (
+              <CustomText className="text-2xl">Connections</CustomText>
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="favourite"
+          options={{
+            title: "",
+            tabBarIcon: ({ focused, color }) => (
+              <Ionicons
+                name={focused ? "heart-sharp" : "heart-outline"}
+                size={24}
+                color={color}
+              />
+            ),
+            headerTitle: () => (
+              <CustomText className="text-2xl">Favourites</CustomText>
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="cart"
           options={{
             title: "",
@@ -66,38 +99,6 @@ export default function TabsLayout() {
                   Total: ${totalPrice}
                 </Text> */}
               </View>
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="favourite"
-          options={{
-            title: "",
-            tabBarIcon: ({ focused, color }) => (
-              <Ionicons
-                name={focused ? "heart-sharp" : "heart-outline"}
-                size={24}
-                color={color}
-              />
-            ),
-            headerTitle: () => (
-              <CustomText className="text-2xl">Favourites</CustomText>
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="people"
-          options={{
-            title: "",
-            tabBarIcon: ({ focused, color }) => (
-              <Ionicons
-                name={focused ? "people-sharp" : "people-outline"}
-                size={24}
-                color={color}
-              />
-            ),
-            headerTitle: () => (
-              <CustomText className="text-2xl">Connections</CustomText>
             ),
           }}
         />
