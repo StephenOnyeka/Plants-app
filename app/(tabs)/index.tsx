@@ -45,7 +45,7 @@ export default function HomeScreen() {
 
   return (
     <>
-      <SafeAreaView>
+      <SafeAreaView className="">
         <View className="px-4">
           <FlatList
             ListHeaderComponent={

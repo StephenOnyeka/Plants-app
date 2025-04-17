@@ -1,10 +1,19 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import CustomText from "@/components/CustomText";
+import { useContext, useMemo } from "react";
+import { CartContext } from "@/app/_layout"; // Import CartContext
 
 export default function TabsLayout() {
+  const { cart } = useContext(CartContext);
+
+  // Calculate total price using useMemo for performance optimization
+  const totalPrice = useMemo(() => {
+    return cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+  }, [cart]);
+
   return (
     <>
       <Tabs
@@ -48,7 +57,15 @@ export default function TabsLayout() {
               />
             ),
             headerTitle: () => (
-              <CustomText className="text-2xl">Your Cart</CustomText>
+              <View className="flex flex-row justify-between items-center w-full">
+                <CustomText className="text-2xl">Your Cart</CustomText>
+                <CustomText className="text-lg font-semibold text-gray-700">
+                  Total: ${totalPrice}
+                </CustomText>
+                {/* <Text className="text-lg  text-gray-700">
+                  Total: ${totalPrice}
+                </Text> */}
+              </View>
             ),
           }}
         />

@@ -18,7 +18,7 @@ export default function Favourite() {
   const router = useRouter();
 
   return (
-    <View className="p-4 flex-1">
+    <View className=" pr-0 flex-1">
       {favorites.length === 0 ? (
         <View className="flex-1 justify-center items-center">
           <Text className="text-center text-gray-500 text-lg">
@@ -27,7 +27,7 @@ export default function Favourite() {
         </View>
       ) : (
         <FlatList
-          data={favorites}
+          data={[...favorites].reverse()} // Reverse the array to show new items at the top
           keyExtractor={(item: Plant, index: number) => `${item.id}-${index}`}
           renderItem={({ item }: { item: Plant }) => (
             <TouchableOpacity
@@ -45,7 +45,7 @@ export default function Favourite() {
                   },
                 })
               }
-              className="bg-gray-300 rounded-3xl flex flex-row gap-4 items-center p-4 mb-4"
+              className="bg-gray-300 rounded-3xl flex flex-row gap-4 items-center p-4 mx-2 mb-4 mt-4"
             >
               <View className="bg-white ">
                 <ImageBackground

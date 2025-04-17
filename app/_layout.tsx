@@ -17,9 +17,11 @@ export const FavoritesContext = createContext<{
 export const CartContext = createContext<{
   cart: Plant[];
   addToCart: (item: Plant) => void;
+  removeFromCart: (id: number) => void;
 }>({
   cart: [],
   addToCart: () => {},
+  removeFromCart: () => {},
 });
 
 export default function RootLayout() {
@@ -61,6 +63,18 @@ export default function RootLayout() {
     setCart((prevCart) => [...prevCart, item]);
   };
 
+  const removeFromCart = (id: number) => {
+    setCart((prevCart) => {
+      const index = prevCart.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        const newCart = [...prevCart];
+        newCart.splice(index, 1); // Remove only the first occurrence
+        return newCart;
+      }
+      return prevCart;
+    });
+  };
+
   if (!fontsLoaded) {
     return null; // Show a loading screen or return null while fonts are loading
   }
@@ -71,12 +85,16 @@ export default function RootLayout() {
 
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
-      <CartContext.Provider value={{ cart, addToCart }}>
+      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
         <Stack initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen
             name="productDetails"
+            options={{ presentation: "modal", headerTitle: "" }}
+          />
+          <Stack.Screen
+            name="checkout"
             options={{ presentation: "modal", headerTitle: "" }}
           />
         </Stack>
