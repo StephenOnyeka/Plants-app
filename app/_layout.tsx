@@ -14,6 +14,14 @@ export const FavoritesContext = createContext<{
   toggleFavorite: () => {},
 });
 
+export const CartContext = createContext<{
+  cart: Plant[];
+  addToCart: (item: Plant) => void;
+}>({
+  cart: [],
+  addToCart: () => {},
+});
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
@@ -37,6 +45,7 @@ export default function RootLayout() {
   });
 
   const [favorites, setFavorites] = useState<Plant[]>([]);
+  const [cart, setCart] = useState<Plant[]>([]);
 
   const toggleFavorite = (item: Plant) => {
     setFavorites((prev) => {
@@ -46,6 +55,10 @@ export default function RootLayout() {
         return [...prev, item];
       }
     });
+  };
+
+  const addToCart = (item: Plant) => {
+    setCart((prevCart) => [...prevCart, item]);
   };
 
   if (!fontsLoaded) {
@@ -58,15 +71,17 @@ export default function RootLayout() {
 
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
-      <Stack initialRouteName="(tabs)">
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen
-          name="productDetails"
-          options={{ presentation: "modal" }}
-        />
-      </Stack>
-      <StatusBar style="dark" />
+      <CartContext.Provider value={{ cart, addToCart }}>
+        <Stack initialRouteName="(tabs)">
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen
+            name="productDetails"
+            options={{ presentation: "modal", headerTitle: "" }}
+          />
+        </Stack>
+        <StatusBar style="dark" />
+      </CartContext.Provider>
     </FavoritesContext.Provider>
   );
 }

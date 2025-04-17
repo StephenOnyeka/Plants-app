@@ -47,6 +47,9 @@ export default function TabsLayout() {
                 color={color}
               />
             ),
+            headerTitle: () => (
+              <CustomText className="text-2xl">Your Cart</CustomText>
+            ),
           }}
         />
         <Tabs.Screen
@@ -76,6 +79,9 @@ export default function TabsLayout() {
                 color={color}
               />
             ),
+            headerTitle: () => (
+              <CustomText className="text-2xl">Connections</CustomText>
+            ),
           }}
         />
         <Tabs.Screen
@@ -88,6 +94,9 @@ export default function TabsLayout() {
                 size={24}
                 color={color}
               />
+            ),
+            headerTitle: () => (
+              <CustomText className="text-2xl">Messages</CustomText>
             ),
           }}
         />

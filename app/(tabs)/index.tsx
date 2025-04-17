@@ -148,9 +148,7 @@ export default function HomeScreen() {
                     <View className="flex flex-row items-center justify-between mt-2">
                       <View className="flex flex-row items-center gap-2 font-bold bg-gray-200 rounded-full p-2 px-4">
                         <Ionicons name="star" size={12} />
-                        <Text>
-                          4.7
-                        </Text>
+                        <Text>4.7</Text>
                       </View>
                       <TouchableOpacity className="border rounded-full p-2">
                         <Fontisto name="plus-a" size={16} />
@@ -161,7 +159,7 @@ export default function HomeScreen() {
               </View>
             }
             data={plantData}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => handleProductClick(item)}
