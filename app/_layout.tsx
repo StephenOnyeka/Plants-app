@@ -86,7 +86,8 @@ export default function RootLayout() {
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
       <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-        <Stack initialRouteName="(tabs)">
+        <Stack initialRouteName="index">
+          <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen
@@ -98,7 +99,7 @@ export default function RootLayout() {
             options={{ presentation: "modal", headerTitle: "" }}
           />
         </Stack>
-        <StatusBar style="dark" />
+        <StatusBar style="light" />
       </CartContext.Provider>
     </FavoritesContext.Provider>
   );

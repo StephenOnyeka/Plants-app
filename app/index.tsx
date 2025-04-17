@@ -15,7 +15,7 @@ export default function Index() {
       source={require("@/assets/proj-img/LeafOnboarding.jpeg")}
       className="flex-1 bg-cover bg-center "
     >
-      <SafeAreaView className="flex-1 bg-black/20 ">
+      <SafeAreaView className="flex-1 bg-black/40 ">
         <View className="absolute bottom-20 p-6 rounded-xl leading-8 flex flex-col gap-y-4">
           <View className="gap-y-2">
             <CustomText style={styles.text} className=" text-white  text-4xl">
@@ -33,7 +33,7 @@ export default function Index() {
             className="rounded-xl text-center p-4 bg-white font-semibold"
             href="/(tabs)"
           >
-            <CustomText className="text-xl font-PoppinsSemiBold text-green-700">
+            <CustomText className="text-xl font-PoppinsSemiBold text-green-700" style={{fontFamily:"PoppinsSemiBold"}} >
               Get Started
             </CustomText>
           </Link>
