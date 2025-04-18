@@ -4,11 +4,12 @@ import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import CustomText from "@/components/CustomText";
 import { useContext, useMemo, useState, useEffect } from "react";
-import { CartContext, FavoritesContext } from "@/app/_layout";
+import { CartContext, FavoritesContext, ThemeContext } from "@/app/_layout";
 
 export default function TabsLayout() {
   const { cart } = useContext(CartContext);
   const { favorites } = useContext(FavoritesContext);
+  const { isDarkMode } = useContext(ThemeContext);
   const [cartNotification, setCartNotification] = useState(0);
   const [favoriteNotification, setFavoriteNotification] = useState(0);
 
@@ -38,12 +39,12 @@ export default function TabsLayout() {
           tabBarActiveTintColor: "green",
           // tabBarInactiveTintColor:"black",
           headerStyle: {
-            backgroundColor: "white",
+            backgroundColor: isDarkMode ? '#1a1a1a' : 'white',
           },
           headerShadowVisible: false,
-          headerTintColor: "white",
+          headerTintColor: isDarkMode ? 'white' : 'black',
           tabBarStyle: {
-            backgroundColor: "white",
+            backgroundColor: isDarkMode ? '#1a1a1a' : 'white',
           },
         }}
       >
@@ -73,7 +74,7 @@ export default function TabsLayout() {
               />
             ),
             headerTitle: () => (
-              <CustomText className="text-2xl">Connections</CustomText>
+              <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Connections</CustomText>
             ),
           }}
         />
@@ -124,8 +125,8 @@ export default function TabsLayout() {
             ),
             headerTitle: () => (
               <View className="flex flex-row justify-between items-center w-full">
-                <CustomText className="text-2xl">Your Cart</CustomText>
-                <CustomText className="text-lg font-semibold text-gray-700">
+                <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Your Cart</CustomText>
+                <CustomText className={`text-lg font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                   Total: ${totalPrice}
                 </CustomText>
                 {/* <Text className="text-lg  text-gray-700">
@@ -150,12 +151,12 @@ export default function TabsLayout() {
               />
             ),
             headerTitle: () => (
-              <CustomText className="text-2xl">Messages</CustomText>
+              <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Messages</CustomText>
             ),
           }}
         />
       </Tabs>
-      <StatusBar style="dark" />
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
     </>
   );
 }

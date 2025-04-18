@@ -6,6 +6,14 @@ import { Text } from "react-native";
 import "../global.css";
 import { Plant } from "@/constants/plantData";
 
+export const ThemeContext = createContext<{
+  isDarkMode: boolean;
+  toggleTheme: () => void;
+}>({
+  isDarkMode: false,
+  toggleTheme: () => {},
+});
+
 export const FavoritesContext = createContext<{
   favorites: Plant[];
   toggleFavorite: (item: Plant) => void;
@@ -46,8 +54,13 @@ export default function RootLayout() {
     PoppinsSemiBoldItalic: require("../assets/fonts/Poppins-SemiBoldItalic.ttf"),
   });
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [favorites, setFavorites] = useState<Plant[]>([]);
   const [cart, setCart] = useState<Plant[]>([]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(prev => !prev);
+  };
 
   const toggleFavorite = (item: Plant) => {
     setFavorites((prev) => {
@@ -68,7 +81,7 @@ export default function RootLayout() {
       const index = prevCart.findIndex((item) => item.id === id);
       if (index !== -1) {
         const newCart = [...prevCart];
-        newCart.splice(index, 1); // Remove only the first occurrence
+        newCart.splice(index, 1);
         return newCart;
       }
       return prevCart;
@@ -76,31 +89,32 @@ export default function RootLayout() {
   };
 
   if (!fontsLoaded) {
-    return null; // Show a loading screen or return null while fonts are loading
+    return null;
   }
 
-  // Set default font for all Text components
   (Text as any).defaultProps = (Text as any).defaultProps || {};
   (Text as any).defaultProps.style = { fontFamily: "Poppins" };
 
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
-      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-        <Stack initialRouteName="index">
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-          <Stack.Screen
-            name="productDetails"
-            options={{ presentation: "modal", headerTitle: "" }}
-          />
-          <Stack.Screen
-            name="checkout"
-            options={{ presentation: "modal", headerTitle: "" }}
-          />
-        </Stack>
-        <StatusBar style="light" />
-      </CartContext.Provider>
-    </FavoritesContext.Provider>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+      <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+          <Stack initialRouteName="index">
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+            <Stack.Screen
+              name="productDetails"
+              options={{ presentation: "modal", headerTitle: "" }}
+            />
+            <Stack.Screen
+              name="checkout"
+              options={{ presentation: "modal", headerTitle: "" }}
+            />
+          </Stack>
+          <StatusBar style={isDarkMode ? "light" : "dark"} />
+        </CartContext.Provider>
+      </FavoritesContext.Provider>
+    </ThemeContext.Provider>
   );
 }
