@@ -193,7 +193,7 @@ export default function HomeScreen() {
                 <View
                   className={`${
                     isDarkMode ? "bg-dark-secondary" : "bg-green-500/20"
-                  } rounded-3xl flex flex-row gap-4 items-center p-4`}
+                  } rounded-3xl flex flex-row gap-4 items-center p-4 mb-2`}
                 >
                   <Image
                     source={require("@/assets/plants/5.jpeg")}
