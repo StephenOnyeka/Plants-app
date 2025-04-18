@@ -99,7 +99,16 @@ export default function RootLayout() {
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
       <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
         <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-          <Stack initialRouteName="index">
+          <Stack
+            initialRouteName="index"
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: isDarkMode ? "#1a1a1a" : "white",
+              },
+              headerTintColor: isDarkMode ? "white" : "black",
+
+            }}
+          >
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />

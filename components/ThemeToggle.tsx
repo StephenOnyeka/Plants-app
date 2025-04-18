@@ -7,7 +7,7 @@ export default function ThemeToggle() {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <View className="flex-row items-center justify-between p-4">
+    <View className="flex-row items-center justify-between py-2">
       <CustomText className={`text-lg ${isDarkMode ? 'text-white' : 'text-black'}`}>
         Dark Mode
       </CustomText>

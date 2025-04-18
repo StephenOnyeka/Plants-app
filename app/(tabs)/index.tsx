@@ -77,55 +77,74 @@ export default function HomeScreen() {
 
   return (
     <>
-      <SafeAreaView className={`${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`}>
+      <SafeAreaView
+        className={`${isDarkMode ? "bg-dark-primary" : "bg-white"}`}
+      >
         <View className="px-4">
           <FlatList
             ListHeaderComponent={
               <View className="flex flex-col gap-y-4 py-4">
                 <View style={styles.container}>
-                  <Ionicons
+                  {/* <Ionicons
                     name="menu-outline"
                     size={30}
                     color={isDarkMode ? 'white' : 'black'}
                     className="rounded-full"
-                  />
+                  /> */}{" "}
+                  <ThemeToggle />
                   <View className="flex-row items-center gap-4">
-                    <ThemeToggle />
-                  <Ionicons
-                    name="person-circle"
-                    size={30}
-                      color={isDarkMode ? 'white' : 'black'}
-                    className="rounded-full"
-                  />
+                    {/* <ThemeToggle /> */}
+                    <Ionicons
+                      name="person-circle"
+                      size={30}
+                      color={isDarkMode ? "white" : "black"}
+                      className="rounded-full"
+                    />
                   </View>
                 </View>
-                <View className="flex-1 mt-4">
-                  <CustomText className={`text-4xl font-PoppinsSemiBold ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                <View className="flex-1">
+                  <CustomText
+                    className={`text-4xl font-PoppinsSemiBold ${
+                      isDarkMode ? "text-white" : "text-black"
+                    }`}
+                  >
                     Top Picks
                   </CustomText>
                 </View>
 
                 <View
-                  className={`${isDarkMode ? 'bg-dark-secondary' : 'bg-gray-200'} rounded-xl p-2 px-6 flex-row items-center mx-2`}
+                  className={`${
+                    isDarkMode ? "bg-dark-secondary" : "bg-gray-200"
+                  } rounded-xl p-2 px-6 flex-row items-center mx-2`}
                   style={{
                     justifyContent: "space-between",
                   }}
                 >
-                  <Ionicons name="search-outline" size={20} color={isDarkMode ? '#a0a0a0' : '#9ca3af'} />
+                  <Ionicons
+                    name="search-outline"
+                    size={20}
+                    color={isDarkMode ? "#a0a0a0" : "#9ca3af"}
+                  />
                   <TextInput
                     placeholder="Search Product"
                     placeholderClassName="font-Poppins"
-                    className={`font-Poppins text-base py-2 ${isDarkMode ? 'text-white' : 'text-black'}`}
+                    className={`font-Poppins text-base py-2 ${
+                      isDarkMode ? "text-white" : "text-black"
+                    }`}
                     style={{
                       flex: 1,
                       justifyContent: "center",
                       marginHorizontal: 12,
                     }}
-                    placeholderTextColor={isDarkMode ? '#a0a0a0' : '#9ca3af'}
+                    placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                   />
-                  <Ionicons name="mic-outline" size={20} color={isDarkMode ? '#a0a0a0' : '#9ca3af'} />
+                  <Ionicons
+                    name="mic-outline"
+                    size={20}
+                    color={isDarkMode ? "#a0a0a0" : "#9ca3af"}
+                  />
                 </View>
                 <View>
                   <FlatList
@@ -137,12 +156,18 @@ export default function HomeScreen() {
                       let isActive = item.id === activeCategory;
                       let activeTextClass = isActive
                         ? "text-white"
-                        : isDarkMode ? "text-gray-300" : "text-gray-700";
+                        : isDarkMode
+                        ? "text-gray-300"
+                        : "text-gray-700";
                       return (
                         <TouchableOpacity
                           onPress={() => setActiveCategory(item.id)}
                           style={{
-                            backgroundColor: isActive ? "#15803d" : isDarkMode ? "#2d2d2d" : "#00000012",
+                            backgroundColor: isActive
+                              ? "#15803d"
+                              : isDarkMode
+                              ? "#2d2d2d"
+                              : "#00000012",
                           }}
                           className="p-2 px-5 rounded-full mr-2"
                         >
@@ -157,9 +182,19 @@ export default function HomeScreen() {
                   />
                 </View>
                 <View className="pt-4">
-                  <CustomText className={`text-xl ${isDarkMode ? 'text-green-400' : 'text-green-700'}`}>Recommended</CustomText>
+                  <CustomText
+                    className={`text-xl ${
+                      isDarkMode ? "text-green-400" : "text-green-700"
+                    }`}
+                  >
+                    Recommended
+                  </CustomText>
                 </View>
-                <View className={`${isDarkMode ? 'bg-dark-secondary' : 'bg-green-500/20'} rounded-3xl flex flex-row gap-4 items-center p-4`}>
+                <View
+                  className={`${
+                    isDarkMode ? "bg-dark-secondary" : "bg-green-500/20"
+                  } rounded-3xl flex flex-row gap-4 items-center p-4`}
+                >
                   <Image
                     source={require("@/assets/plants/5.jpeg")}
                     className="rounded-2xl size-28"
@@ -167,28 +202,56 @@ export default function HomeScreen() {
                   <View className="flex-1">
                     <View className="flex flex-row justify-between items-center">
                       <CustomText
-                        className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}
+                        className={`text-2xl ${
+                          isDarkMode ? "text-white" : "text-black"
+                        }`}
                         style={{ fontFamily: "PoppinsSemiBold" }}
                       >
                         Cactus
                       </CustomText>
-                      <CustomText className={`text-2xl font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                      <CustomText
+                        className={`text-2xl font-semibold ${
+                          isDarkMode ? "text-white" : "text-black"
+                        }`}
+                      >
                         $64
                       </CustomText>
                     </View>
                     <CustomText
-                      className={`mt-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                      className={`mt-2 ${
+                        isDarkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
                       style={{ fontFamily: "Poppins" }}
                     >
                       Category: Outdoor
                     </CustomText>
                     <View className="flex flex-row items-center justify-between mt-2">
-                      <View className={`flex flex-row items-center gap-2 font-bold ${isDarkMode ? 'bg-dark-primary' : 'bg-gray-200'} rounded-full p-2 px-4`}>
-                        <Ionicons name="star" size={12} color={isDarkMode ? '#f5dd4b' : '#6b7280'} />
-                        <Text className={isDarkMode ? 'text-white' : 'text-black'}>4.7</Text>
+                      <View
+                        className={`flex flex-row items-center gap-2 font-bold ${
+                          isDarkMode ? "bg-dark-primary" : "bg-gray-200"
+                        } rounded-full p-2 px-4`}
+                      >
+                        <Ionicons
+                          name="star"
+                          size={12}
+                          color={isDarkMode ? "#f5dd4b" : "#6b7280"}
+                        />
+                        <Text
+                          className={isDarkMode ? "text-white" : "text-black"}
+                        >
+                          4.7
+                        </Text>
                       </View>
-                      <TouchableOpacity className={`border ${isDarkMode ? 'border-gray-600' : 'border-gray-300'} rounded-full p-2`}>
-                        <Fontisto name="plus-a" size={16} color={isDarkMode ? 'white' : 'black'} />
+                      <TouchableOpacity
+                        className={`border ${
+                          isDarkMode ? "border-gray-600" : "border-gray-300"
+                        } rounded-full p-2`}
+                      >
+                        <Fontisto
+                          name="plus-a"
+                          size={16}
+                          color={isDarkMode ? "white" : "black"}
+                        />
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -197,7 +260,11 @@ export default function HomeScreen() {
             }
             ListFooterComponent={
               <View className="mt-8 mb-4">
-                <CustomText className={`text-2xl font-PoppinsSemiBold mb-4 ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                <CustomText
+                  className={`text-2xl font-PoppinsSemiBold mb-4 ${
+                    isDarkMode ? "text-white" : "text-black"
+                  }`}
+                >
                   You Might Also Like
                 </CustomText>
                 <FlatList
@@ -210,11 +277,17 @@ export default function HomeScreen() {
                       onPress={() => handleProductClick(item)}
                       className="mr-4 w-40"
                     >
-                      <View className={`${isDarkMode ? 'bg-dark-secondary' : 'bg-white'} rounded-2xl overflow-hidden ${isDarkMode ? 'border-dark-border' : 'border-gray-200'} border`}>
+                      <View
+                        className={`${
+                          isDarkMode ? "bg-dark-secondary" : "bg-white"
+                        } rounded-2xl overflow-hidden ${
+                          isDarkMode ? "border-dark-border" : "border-gray-200"
+                        } border`}
+                      >
                         <ImageBackground
                           source={item.image}
                           resizeMode="contain"
-                          className="h-32 w-full rounded-t-2xl"
+                          className="h-32 w-full rounded-2xl bg-white"
                         >
                           <TouchableOpacity
                             onPress={() => handleToggleFavorite(item)}
@@ -232,22 +305,40 @@ export default function HomeScreen() {
                           </TouchableOpacity>
                         </ImageBackground>
                         <View className="p-2">
-                          <CustomText className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <CustomText
+                            className={`text-sm ${
+                              isDarkMode ? "text-gray-400" : "text-gray-500"
+                            }`}
+                          >
                             {item.category}
                           </CustomText>
                           <CustomText
-                            className={`text-base ${isDarkMode ? 'text-white' : 'text-black'}`}
+                            className={`text-base ${
+                              isDarkMode ? "text-white" : "text-black"
+                            }`}
                             style={{ fontFamily: "PoppinsSemiBold" }}
                           >
                             {item.title}
                           </CustomText>
                           <View className="flex-row items-center justify-between mt-1">
-                            <CustomText className={isDarkMode ? 'text-green-400' : 'text-green-600'}>
+                            <CustomText
+                              className={
+                                isDarkMode ? "text-green-400" : "text-green-600"
+                              }
+                            >
                               ${item.price}
                             </CustomText>
                             <View className="flex-row items-center">
-                              <Ionicons name="star" size={12} color={isDarkMode ? '#f5dd4b' : '#6b7280'} />
-                              <Text className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs ml-1`}>
+                              <Ionicons
+                                name="star"
+                                size={12}
+                                color={isDarkMode ? "#f5dd4b" : "#6b7280"}
+                              />
+                              <Text
+                                className={`${
+                                  isDarkMode ? "text-gray-400" : "text-gray-500"
+                                } text-xs ml-1`}
+                              >
                                 {item.stars}
                               </Text>
                             </View>
@@ -264,9 +355,11 @@ export default function HomeScreen() {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => handleProductClick(item)}
-                className={`rounded-2xl overflow-hidden w-[48%] mb-4 ${isDarkMode ? 'border-dark-border' : 'border-gray-200'} border`}
+                className={`rounded-2xl overflow-hidden w-[48%] mb-4 ${
+                  isDarkMode ? "border-dark-border" : "border-gray-200"
+                } border`}
               >
-                <View className={`w-full ${isDarkMode ? 'bg-dark-secondary' : 'bg-white'} rounded-2xl`}>
+                <View className={`w-full bg-white rounded-2xl`}>
                   <ImageBackground
                     source={item.image}
                     resizeMode="contain"
@@ -290,18 +383,39 @@ export default function HomeScreen() {
                 </View>
                 <View className="p-2 w-full">
                   <View className="flex flex-row items-center justify-between">
-                    <CustomText className={`rounded-full text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <CustomText
+                      className={`rounded-full text-sm ${
+                        isDarkMode ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    >
                       {item.category}
                     </CustomText>
                     <View className="flex flex-row items-center gap-1 font-bold rounded-full p-2">
-                      <Ionicons name="star" size={12} color={isDarkMode ? '#f5dd4b' : '#6b7280'} />
-                      <Text className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>{item.stars}</Text>
+                      <Ionicons
+                        name="star"
+                        size={12}
+                        color={isDarkMode ? "#f5dd4b" : "#6b7280"}
+                      />
+                      <Text
+                        className={
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }
+                      >
+                        {item.stars}
+                      </Text>
                     </View>
                   </View>
-                  <CustomText className={isDarkMode ? 'text-white' : 'text-black'} style={{ fontFamily: "PoppinsSemiBold" }}>
+                  <CustomText
+                    className={isDarkMode ? "text-white" : "text-black"}
+                    style={{ fontFamily: "PoppinsSemiBold" }}
+                  >
                     {item.title}
                   </CustomText>
-                  <CustomText className={isDarkMode ? 'text-white' : 'text-black'}>${item.price}</CustomText>
+                  <CustomText
+                    className={isDarkMode ? "text-white" : "text-black"}
+                  >
+                    ${item.price}
+                  </CustomText>
                 </View>
               </TouchableOpacity>
             )}

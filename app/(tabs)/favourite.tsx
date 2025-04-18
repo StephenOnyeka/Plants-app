@@ -48,7 +48,7 @@ export default function Favourite() {
               }
               className={`${isDarkMode ? 'bg-dark-secondary' : 'bg-gray-300'} rounded-3xl flex flex-row gap-4 items-center p-4 mx-2 mb-4 mt-4`}
             >
-              <View className={`${isDarkMode ? 'bg-dark-primary' : 'bg-white'} rounded-2xl`}>
+              <View className={`bg-white rounded-2xl`}>
                 <ImageBackground
                   source={item.image}
                   className="rounded-2xl size-32"
