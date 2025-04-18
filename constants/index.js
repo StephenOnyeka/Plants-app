@@ -17,10 +17,9 @@ export const categories = [
   },
   {
     id: 5,
-    title: "Succulent",
+    title: "Patio",
   },
 ];
-
 
 // export const coffeeItems = [
 //   {

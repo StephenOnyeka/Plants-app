@@ -48,6 +48,12 @@ export default function HomeScreen() {
     return filtered;
   }, [activeCategory, searchQuery]);
 
+  // Get 5 random products
+  const randomProducts = useMemo(() => {
+    const shuffled = [...plantData].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 5);
+  }, []);
+
   const handleToggleFavorite = (item: Plant) => {
     toggleFavorite(item);
   };
@@ -182,6 +188,70 @@ export default function HomeScreen() {
                     </View>
                   </View>
                 </View>
+              </View>
+            }
+            ListFooterComponent={
+              <View className="mt-8 mb-4">
+                <CustomText className="text-2xl font-PoppinsSemiBold mb-4">
+                  You Might Also Like
+                </CustomText>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={randomProducts}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      onPress={() => handleProductClick(item)}
+                      className="mr-4 w-40"
+                    >
+                      <View className="bg-white rounded-2xl overflow-hidden border border-gray-200">
+                        <ImageBackground
+                          source={item.image}
+                          resizeMode="contain"
+                          className="h-32 w-full rounded-t-2xl"
+                        >
+                          <TouchableOpacity
+                            onPress={() => handleToggleFavorite(item)}
+                            style={{ position: "absolute", top: 8, right: 8 }}
+                          >
+                            <Ionicons
+                              name={
+                                favorites.some((fav) => fav.id === item.id)
+                                  ? "heart-sharp"
+                                  : "heart-outline"
+                              }
+                              size={20}
+                              color={"green"}
+                            />
+                          </TouchableOpacity>
+                        </ImageBackground>
+                        <View className="p-2">
+                          <CustomText className="text-sm text-gray-500">
+                            {item.category}
+                          </CustomText>
+                          <CustomText
+                            className="text-base"
+                            style={{ fontFamily: "PoppinsSemiBold" }}
+                          >
+                            {item.title}
+                          </CustomText>
+                          <View className="flex-row items-center justify-between mt-1">
+                            <CustomText className="text-green-600">
+                              ${item.price}
+                            </CustomText>
+                            <View className="flex-row items-center">
+                              <Ionicons name="star" size={12} color="#6b7280" />
+                              <Text className="text-gray-500 text-xs ml-1">
+                                {item.stars}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
               </View>
             }
             data={filteredProducts}
