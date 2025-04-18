@@ -3,16 +3,32 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import CustomText from "@/components/CustomText";
-import { useContext, useMemo } from "react";
-import { CartContext } from "@/app/_layout"; // Import CartContext
+import { useContext, useMemo, useState, useEffect } from "react";
+import { CartContext, FavoritesContext } from "@/app/_layout";
 
 export default function TabsLayout() {
   const { cart } = useContext(CartContext);
+  const { favorites } = useContext(FavoritesContext);
+  const [cartNotification, setCartNotification] = useState(0);
+  const [favoriteNotification, setFavoriteNotification] = useState(0);
 
   // Calculate total price using useMemo for performance optimization
   const totalPrice = useMemo(() => {
     return cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
   }, [cart]);
+
+  // Update notifications when cart or favorites change
+  useEffect(() => {
+    if (cart.length > 0) {
+      setCartNotification(prev => prev + 1);
+    }
+  }, [cart.length]);
+
+  useEffect(() => {
+    if (favorites.length > 0) {
+      setFavoriteNotification(prev => prev + 1);
+    }
+  }, [favorites.length]);
 
   return (
     <>
@@ -67,15 +83,25 @@ export default function TabsLayout() {
           options={{
             title: "",
             tabBarIcon: ({ focused, color }) => (
-              <Ionicons
-                name={focused ? "heart-sharp" : "heart-outline"}
-                size={24}
-                color={color}
-              />
+              <View>
+                <Ionicons
+                  name={focused ? "heart-sharp" : "heart-outline"}
+                  size={24}
+                  color={color}
+                />
+                {favoriteNotification > 0 && (
+                  <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 items-center justify-center">
+                    <Text className="text-white text-xs">{favoriteNotification}</Text>
+                  </View>
+                )}
+              </View>
             ),
             headerTitle: () => (
               <CustomText className="text-2xl">Favourites</CustomText>
             ),
+          }}
+          listeners={{
+            focus: () => setFavoriteNotification(0),
           }}
         />
         <Tabs.Screen
@@ -83,11 +109,18 @@ export default function TabsLayout() {
           options={{
             title: "",
             tabBarIcon: ({ focused, color }) => (
-              <Ionicons
-                name={focused ? "cart-sharp" : "cart-outline"}
-                size={24}
-                color={color}
-              />
+              <View>
+                <Ionicons
+                  name={focused ? "cart-sharp" : "cart-outline"}
+                  size={24}
+                  color={color}
+                />
+                {cartNotification > 0 && (
+                  <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 items-center justify-center">
+                    <Text className="text-white text-xs">{cartNotification}</Text>
+                  </View>
+                )}
+              </View>
             ),
             headerTitle: () => (
               <View className="flex flex-row justify-between items-center w-full">
@@ -100,6 +133,9 @@ export default function TabsLayout() {
                 </Text> */}
               </View>
             ),
+          }}
+          listeners={{
+            focus: () => setCartNotification(0),
           }}
         />
         <Tabs.Screen
