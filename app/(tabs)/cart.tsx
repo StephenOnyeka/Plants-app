@@ -17,7 +17,7 @@ export const Cart = () => {
   }, [cart]);
 
   return (
-    <View className={`mt-2 flex-1 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`} style={{ paddingRight: 0 }}>
+    <View className={`mt-0 flex-1 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`} style={{ paddingRight: 0 }}>
       {cart.length === 0 ? (
         <View className="flex-1 justify-center items-center">
           <Text className={`text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Your cart is empty.</Text>
@@ -51,7 +51,7 @@ export const Cart = () => {
             )}
             contentContainerStyle={{ paddingRight: 0 }}
           />
-          <View className={`p-4 ${isDarkMode ? 'bg-dark-secondary' : 'bg-white'}`}>
+          <View className={`p-4 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`}>
             <TouchableOpacity
               className="bg-green-500 rounded-2xl p-4 flex flex-row items-center justify-center"
               onPress={() => {

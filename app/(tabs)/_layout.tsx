@@ -37,7 +37,6 @@ export default function TabsLayout() {
         initialRouteName="index"
         screenOptions={{
           tabBarActiveTintColor: "green",
-          // tabBarInactiveTintColor:"black",
           headerStyle: {
             backgroundColor: isDarkMode ? '#1a1a1a' : 'white',
           },
@@ -45,7 +44,9 @@ export default function TabsLayout() {
           headerTintColor: isDarkMode ? 'white' : 'black',
           tabBarStyle: {
             backgroundColor: isDarkMode ? '#1a1a1a' : 'white',
+            borderTopColor: isDarkMode ? '#3d3d3d' : '#e5e5e5',
           },
+          tabBarInactiveTintColor: isDarkMode ? '#a0a0a0' : '#666666',
         }}
       >
         <Tabs.Screen
@@ -91,14 +92,14 @@ export default function TabsLayout() {
                   color={color}
                 />
                 {favoriteNotification > 0 && (
-                  <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 items-center justify-center">
+                  <View className={`absolute -top-1 -right-1 ${isDarkMode ? 'bg-red-500' : 'bg-red-500'} rounded-full w-4 h-4 items-center justify-center`}>
                     <Text className="text-white text-xs">{favoriteNotification}</Text>
                   </View>
                 )}
               </View>
             ),
             headerTitle: () => (
-              <CustomText className="text-2xl">Favourites</CustomText>
+              <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Favourites</CustomText>
             ),
           }}
           listeners={{
@@ -117,7 +118,7 @@ export default function TabsLayout() {
                   color={color}
                 />
                 {cartNotification > 0 && (
-                  <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 items-center justify-center">
+                  <View className={`absolute -top-1 -right-1 ${isDarkMode ? 'bg-red-500' : 'bg-red-500'} rounded-full w-4 h-4 items-center justify-center`}>
                     <Text className="text-white text-xs">{cartNotification}</Text>
                   </View>
                 )}
@@ -129,9 +130,6 @@ export default function TabsLayout() {
                 <CustomText className={`text-lg font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                   Total: ${totalPrice}
                 </CustomText>
-                {/* <Text className="text-lg  text-gray-700">
-                  Total: ${totalPrice}
-                </Text> */}
               </View>
             ),
           }}
