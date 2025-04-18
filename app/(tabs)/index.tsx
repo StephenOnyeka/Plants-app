@@ -9,7 +9,7 @@ import {
   Text,
 } from "react-native";
 import { categories } from "@/constants";
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, Fontisto } from "@expo/vector-icons";
 import CustomText from "@/components/CustomText";
@@ -20,9 +20,33 @@ import { FavoritesContext } from "../_layout";
 
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
   const router = useRouter();
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
+
+  const filteredProducts = useMemo(() => {
+    let filtered = plantData;
+
+    // Apply category filter
+    if (activeCategory !== 1) {
+      filtered = filtered.filter(
+        product => product.category === categories.find(cat => cat.id === activeCategory)?.title
+      );
+    }
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(
+        product => 
+          product.title.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query)
+      );
+    }
+
+    return filtered;
+  }, [activeCategory, searchQuery]);
 
   const handleToggleFavorite = (item: Plant) => {
     toggleFavorite(item);
@@ -85,6 +109,8 @@ export default function HomeScreen() {
                       marginHorizontal: 12,
                     }}
                     placeholderTextColor="#9ca3af"
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
                   />
                   <Ionicons name="mic-outline" size={20} color="#9ca3af" />
                 </View>
@@ -158,7 +184,7 @@ export default function HomeScreen() {
                 </View>
               </View>
             }
-            data={plantData}
+            data={filteredProducts}
             keyExtractor={(item, index) => `${item.id}-${index}`}
             renderItem={({ item }) => (
               <TouchableOpacity
