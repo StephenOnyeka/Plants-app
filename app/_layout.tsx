@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
+import { Ionicons, Fontisto } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
 import "../global.css";
 import { Plant } from "@/constants/plantData";
@@ -54,6 +55,8 @@ export default function RootLayout() {
     PoppinsBlack: require("../assets/fonts/Poppins-Black.ttf"),
     PoppinsBlackItalic: require("../assets/fonts/Poppins-BlackItalic.ttf"),
     PoppinsSemiBoldItalic: require("../assets/fonts/Poppins-SemiBoldItalic.ttf"),
+    ...Ionicons.font,
+    ...Fontisto.font,
   });
 
   const [isDarkMode, setIsDarkMode] = useState(false);

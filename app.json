@@ -4,7 +4,7 @@
     "slug": "Plants-prebuild",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/LeafIcon.png",
+    "icon": "./assets/icons/leafyicon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
