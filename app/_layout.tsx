@@ -1,10 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
-import { Text } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
 import "../global.css";
 import { Plant } from "@/constants/plantData";
+
+SplashScreen.preventAutoHideAsync();
 
 export const ThemeContext = createContext<{
   isDarkMode: boolean;
@@ -33,7 +35,7 @@ export const CartContext = createContext<{
 });
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
     PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
     PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
@@ -88,12 +90,15 @@ export default function RootLayout() {
     });
   };
 
-  if (!fontsLoaded) {
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
     return null;
   }
-
-  (Text as any).defaultProps = (Text as any).defaultProps || {};
-  (Text as any).defaultProps.style = { fontFamily: "Poppins" };
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>

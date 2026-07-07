@@ -4,7 +4,7 @@
     "slug": "Plants-prebuild",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/lightIcon.png",
+    "icon": "./assets/icons/LeafIcon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/lightIcon.png",
+        "foregroundImage": "./assets/icons/LeafIcon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.don_mizzy.Plantsprebuild"
