@@ -5,6 +5,7 @@ import {
   FlatList,
   ImageBackground,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import CustomText from "@/components/CustomText";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,10 +20,20 @@ export default function Favourite() {
   const router = useRouter();
 
   return (
-    <View className={`pr-0 flex-1 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
+      ]}
+    >
       {favorites.length === 0 ? (
-        <View className="flex-1 justify-center items-center">
-          <Text className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
+        <View style={styles.emptyWrapper}>
+          <Text
+            style={[
+              styles.emptyText,
+              { color: isDarkMode ? "#9ca3af" : "#6b7280" },
+            ]}
+          >
             Nothing here yet!
           </Text>
         </View>
@@ -46,39 +57,75 @@ export default function Favourite() {
                   },
                 })
               }
-              className={`${isDarkMode ? 'bg-dark-secondary' : 'bg-gray-300'} rounded-3xl flex flex-row gap-4 items-center p-4 mx-2 mb-4 mt-4`}
+              style={[
+                styles.card,
+                { backgroundColor: isDarkMode ? "#2d2d2d" : "#d1d5db" },
+              ]}
             >
-              <View className={`bg-white rounded-2xl`}>
+              <View style={styles.imageWrapper}>
                 <ImageBackground
                   source={item.image}
-                  className="rounded-2xl size-32"
+                  style={styles.image}
                   resizeMode="contain"
                 />
               </View>
-              <View className="flex-1">
-                <View className="flex flex-row justify-between items-center">
+              <View style={styles.info}>
+                <View style={styles.titleRow}>
                   <CustomText
-                    className={`text-2xl w-[70%] ${isDarkMode ? 'text-white' : 'text-black'}`}
+                    style={[
+                      styles.title,
+                      { color: isDarkMode ? "white" : "black" },
+                    ]}
                   >
                     {item.title}
                   </CustomText>
-                  <CustomText className={`text-2xl font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                  <CustomText
+                    style={[
+                      styles.price,
+                      { color: isDarkMode ? "white" : "black" },
+                    ]}
+                  >
                     ${item.price}
                   </CustomText>
                 </View>
-                <CustomText className={`mt-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} style={{ fontFamily: "Poppins" }}>
+                <CustomText
+                  style={[
+                    styles.category,
+                    { color: isDarkMode ? "#9ca3af" : "#4b5563" },
+                  ]}
+                >
                   Category: {item.category}
                 </CustomText>
-                <View className="flex flex-row items-center justify-between mt-2">
-                  <View className={`flex flex-row items-center gap-1 font-bold ${isDarkMode ? 'bg-dark-primary' : 'bg-gray-200'} rounded-full p-2 px-4`}>
-                    <Ionicons name="star" size={12} color={isDarkMode ? '#f5dd4b' : '#6b7280'} />
-                    <Text className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>{item.stars}</Text>
+                <View style={styles.footer}>
+                  <View
+                    style={[
+                      styles.starPill,
+                      { backgroundColor: isDarkMode ? "#1a1a1a" : "#e5e7eb" },
+                    ]}
+                  >
+                    <Ionicons
+                      name="star"
+                      size={12}
+                      color={isDarkMode ? "#f5dd4b" : "#6b7280"}
+                    />
+                    <Text
+                      style={{ color: isDarkMode ? "#9ca3af" : "#6b7280" }}
+                    >
+                      {item.stars}
+                    </Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => toggleFavorite(item)}
-                    className={`${isDarkMode ? 'border-gray-600' : 'border-gray-300'} border rounded-full p-2`}
+                    style={[
+                      styles.heartButton,
+                      { borderColor: isDarkMode ? "#4b5563" : "#d1d5db" },
+                    ]}
                   >
-                    <Ionicons name="heart-sharp" size={20} color={isDarkMode ? 'white' : 'black'} />
+                    <Ionicons
+                      name="heart-sharp"
+                      size={20}
+                      color={isDarkMode ? "white" : "black"}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -89,3 +136,77 @@ export default function Favourite() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingRight: 0,
+    flex: 1,
+  },
+  emptyWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    textAlign: "center",
+    fontSize: 18,
+  },
+  card: {
+    borderRadius: 24,
+    flexDirection: "row",
+    gap: 16,
+    alignItems: "center",
+    padding: 16,
+    marginHorizontal: 8,
+    marginBottom: 16,
+    marginTop: 16,
+  },
+  imageWrapper: {
+    backgroundColor: "white",
+    borderRadius: 16,
+  },
+  image: {
+    borderRadius: 16,
+    width: 128,
+    height: 128,
+  },
+  info: {
+    flex: 1,
+  },
+  titleRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 24,
+    width: "70%",
+  },
+  price: {
+    fontSize: 24,
+    fontWeight: "600",
+  },
+  category: {
+    marginTop: 8,
+    fontFamily: "Poppins",
+  },
+  footer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+  starPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    borderRadius: 9999,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  heartButton: {
+    borderWidth: 1,
+    borderRadius: 9999,
+    padding: 8,
+  },
+});

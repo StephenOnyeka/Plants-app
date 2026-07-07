@@ -1,18 +1,9 @@
 import React from "react";
 import { Text, TextProps, StyleSheet } from "react-native";
 
-export default function CustomText({
-  className,
-  style,
-  children,
-  ...props
-}: TextProps & { className?: string }) {
+export default function CustomText({ style, children, ...props }: TextProps) {
   return (
-    <Text
-      {...props}
-      className={className}
-      style={[styles.text, style]} // Merge default font with custom styles
-    >
+    <Text {...props} style={[styles.text, style]}>
       {children}
     </Text>
   );

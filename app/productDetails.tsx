@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import CustomText from "@/components/CustomText";
 import { Ionicons } from "@expo/vector-icons";
@@ -31,28 +38,35 @@ export default function ProductDetails() {
   );
 
   return (
-    <View className={`flex-1 ${isDarkMode ? "bg-dark-primary" : "bg-white"}`}>
+    <View
+      style={[
+        styles.root,
+        { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
+      ]}
+    >
       <Image
         source={imageSource}
-        className="w-full h-64 rounded-2xl my-4 bg-white"
+        style={styles.heroImage}
         resizeMode="contain"
       />
-      <ScrollView className="pr-0">
-        <View className="p-4">
-          <View className="flex flex-row justify-between items-center mb-2">
+      <ScrollView>
+        <View style={styles.body}>
+          <View style={styles.titleRow}>
             <CustomText
-              className={`text-3xl font-semibold ${
-                isDarkMode ? "text-white" : "text-black"
-              }`}
+              style={[
+                styles.title,
+                { color: isDarkMode ? "white" : "black" },
+              ]}
             >
               {params.title}
             </CustomText>
             {matchedPlant && (
               <TouchableOpacity
                 onPress={() => toggleFavorite(matchedPlant)}
-                className={`p-2 border rounded-full ${
-                  isDarkMode ? "border-gray-600" : "border-green-800"
-                }`}
+                style={[
+                  styles.favButton,
+                  { borderColor: isDarkMode ? "#4b5563" : "#166534" },
+                ]}
               >
                 <Ionicons
                   name={
@@ -67,24 +81,27 @@ export default function ProductDetails() {
             )}
           </View>
           <CustomText
-            className={`text-xl mb-4 ${
-              isDarkMode ? "text-gray-300" : "text-gray-500"
-            }`}
+            style={[
+              styles.category,
+              { color: isDarkMode ? "#d1d5db" : "#6b7280" },
+            ]}
           >
             {params.category}
           </CustomText>
           <CustomText
-            className={`text-3xl font-bold mb-4 ${
-              isDarkMode ? "text-white" : "text-black"
-            }`}
+            style={[
+              styles.price,
+              { color: isDarkMode ? "white" : "black" },
+            ]}
           >
             ${params.price}
             {"\n"}
           </CustomText>
           <CustomText
-            className={`text mb-4 leading-8 ${
-              isDarkMode ? "text-gray-300" : "text-black"
-            }`}
+            style={[
+              styles.description,
+              { color: isDarkMode ? "#d1d5db" : "black" },
+            ]}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum at
             quidem et dolor placeat laudantium vitae impedit distinctio delectus
@@ -107,11 +124,12 @@ export default function ProductDetails() {
           </CustomText>
         </View>
       </ScrollView>
-      <View className="p-4">
+      <View style={styles.footer}>
         <TouchableOpacity
-          className={`rounded-2xl p-4 flex flex-row items-center justify-center ${
-            isDarkMode ? "bg-green-700" : "bg-green-500"
-          }`}
+          style={[
+            styles.addButton,
+            { backgroundColor: isDarkMode ? "#15803d" : "#22c55e" },
+          ]}
           onPress={() => {
             if (matchedPlant) {
               addToCart(matchedPlant);
@@ -119,9 +137,68 @@ export default function ProductDetails() {
           }}
         >
           <Ionicons name="cart-outline" size={20} color="white" />
-          <Text className="text-white text-lg ml-2">Add to Cart</Text>
+          <Text style={styles.addButtonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  heroImage: {
+    width: "100%",
+    height: 256,
+    borderRadius: 16,
+    marginVertical: 16,
+    backgroundColor: "white",
+  },
+  body: {
+    padding: 16,
+  },
+  titleRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "600",
+  },
+  favButton: {
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 9999,
+  },
+  category: {
+    fontSize: 20,
+    marginBottom: 16,
+  },
+  price: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  description: {
+    marginBottom: 16,
+    lineHeight: 32,
+  },
+  footer: {
+    padding: 16,
+  },
+  addButton: {
+    borderRadius: 16,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addButtonText: {
+    color: "white",
+    fontSize: 18,
+    marginLeft: 8,
+  },
+});

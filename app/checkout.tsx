@@ -1,5 +1,11 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import CustomText from "@/components/CustomText";
 import { useRouter } from "expo-router";
@@ -24,89 +30,148 @@ export default function Checkout() {
     }
   };
 
+  const labelStyle = [
+    styles.label,
+    { color: isDarkMode ? "#d1d5db" : "black" },
+  ];
+  const inputStyle = [
+    styles.input,
+    {
+      borderColor: isDarkMode ? "#4b5563" : "#d1d5db",
+      backgroundColor: isDarkMode ? "#2d2d2d" : "white",
+      color: isDarkMode ? "white" : "black",
+    },
+  ];
+
   return (
     <>
-      <View className={`flex-1 p-4 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`}>
-        {/* <CustomText className="text-3xl font-bold mb-4">Checkout</CustomText> */}
-        <CustomText className={`text-3xl mb-4 ${isDarkMode ? 'text-white' : 'text-black'}`}>Checkout</CustomText>
-
-        <CustomText className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>
-          Card Number
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
+        ]}
+      >
+        <CustomText
+          style={[styles.heading, { color: isDarkMode ? "white" : "black" }]}
+        >
+          Checkout
         </CustomText>
+
+        <CustomText style={labelStyle}>Card Number</CustomText>
         <TextInput
-          className={`border ${isDarkMode ? 'border-gray-600 bg-dark-secondary text-white' : 'border-gray-300 bg-white text-black'} rounded-lg p-2 mb-4`}
+          style={inputStyle}
           placeholder="Enter your card number"
-          placeholderTextColor={isDarkMode ? '#a0a0a0' : '#9ca3af'}
+          placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
           keyboardType="numeric"
           value={cardNumber}
           onChangeText={setCardNumber}
         />
 
-        <CustomText className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>
-          Expiry Date
-        </CustomText>
+        <CustomText style={labelStyle}>Expiry Date</CustomText>
         <TextInput
-          className={`border ${isDarkMode ? 'border-gray-600 bg-dark-secondary text-white' : 'border-gray-300 bg-white text-black'} rounded-lg p-2 mb-4`}
+          style={inputStyle}
           placeholder="MM/YY"
-          placeholderTextColor={isDarkMode ? '#a0a0a0' : '#9ca3af'}
+          placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
           keyboardType="numeric"
           value={expiryDate}
           onChangeText={setExpiryDate}
         />
 
-        <CustomText className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>CVV</CustomText>
+        <CustomText style={labelStyle}>CVV</CustomText>
         <TextInput
-          className={`border ${isDarkMode ? 'border-gray-600 bg-dark-secondary text-white' : 'border-gray-300 bg-white text-black'} rounded-lg p-2 mb-4`}
+          style={inputStyle}
           placeholder="Enter CVV"
-          placeholderTextColor={isDarkMode ? '#a0a0a0' : '#9ca3af'}
+          placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
           keyboardType="numeric"
           secureTextEntry
           value={cvv}
           onChangeText={setCvv}
         />
 
-        <CustomText className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>
-          Select Bank
-        </CustomText>
-        <View className={`border ${isDarkMode ? 'border-gray-600 bg-dark-secondary' : 'border-gray-300 bg-white'} rounded-lg mb-4`}>
+        <CustomText style={labelStyle}>Select Bank</CustomText>
+        <View
+          style={[
+            styles.pickerWrapper,
+            {
+              borderColor: isDarkMode ? "#4b5563" : "#d1d5db",
+              backgroundColor: isDarkMode ? "#2d2d2d" : "white",
+            },
+          ]}
+        >
           <Picker
             selectedValue={selectedBank}
             onValueChange={(itemValue: string) => setSelectedBank(itemValue)}
-            style={{ color: isDarkMode ? 'white' : 'black' }}
+            style={{ color: isDarkMode ? "white" : "black" }}
           >
-            <Picker.Item label="Select your bank" value="" color={isDarkMode ? '#a0a0a0' : '#9ca3af'} />
-            <Picker.Item label="Access Bank" value="bankA" color={isDarkMode ? 'white' : 'black'} />
-            <Picker.Item label="First Bank" value="bankB" color={isDarkMode ? 'white' : 'black'} />
-            <Picker.Item label="Zenith Bank" value="bankC" color={isDarkMode ? 'white' : 'black'} />
+            <Picker.Item label="Select your bank" value="" color={isDarkMode ? "#a0a0a0" : "#9ca3af"} />
+            <Picker.Item label="Access Bank" value="bankA" color={isDarkMode ? "white" : "black"} />
+            <Picker.Item label="First Bank" value="bankB" color={isDarkMode ? "white" : "black"} />
+            <Picker.Item label="Zenith Bank" value="bankC" color={isDarkMode ? "white" : "black"} />
           </Picker>
         </View>
 
-        <CustomText className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>PIN</CustomText>
+        <CustomText style={labelStyle}>PIN</CustomText>
         <TextInput
-          className={`border ${isDarkMode ? 'border-gray-600 bg-dark-secondary text-white' : 'border-gray-300 bg-white text-black'} rounded-lg p-2 mb-4`}
+          style={inputStyle}
           placeholder="Enter your PIN"
-          placeholderTextColor={isDarkMode ? '#a0a0a0' : '#9ca3af'}
+          placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
           keyboardType="numeric"
           secureTextEntry
           value={pin}
           onChangeText={setPin}
         />
-
-        {/* <TouchableOpacity
-          className="bg-green-500 rounded-full p-4 flex items-center justify-center"
-          onPress={handlePayment}
-        >
-          <Text className="text-white text-lg">Confirm and Pay</Text>
-        </TouchableOpacity> */}
       </View>
-      <View className={`p-4 ${isDarkMode ? 'bg-dark-secondary' : 'bg-white'}`}>
-        <TouchableOpacity
-          className="bg-green-500 rounded-2xl p-4 flex items-center justify-center"
-          onPress={handlePayment}
-        >
-          <Text className="text-white text-lg">Confirm and Pay</Text>
+      <View
+        style={[
+          styles.footer,
+          { backgroundColor: isDarkMode ? "#2d2d2d" : "white" },
+        ]}
+      >
+        <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
+          <Text style={styles.payButtonText}>Confirm and Pay</Text>
         </TouchableOpacity>
       </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  heading: {
+    fontSize: 30,
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 16,
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  footer: {
+    padding: 16,
+  },
+  payButton: {
+    backgroundColor: "#22c55e",
+    borderRadius: 16,
+    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  payButtonText: {
+    color: "white",
+    fontSize: 18,
+  },
+});

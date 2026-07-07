@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useContext, useMemo } from "react"; // Import useMemo
 import { CartContext, ThemeContext } from "@/app/_layout";
 import { FlatList, Image, TouchableOpacity } from "react-native";
@@ -17,10 +17,22 @@ export const Cart = () => {
   }, [cart]);
 
   return (
-    <View className={`mt-0 flex-1 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`} style={{ paddingRight: 0 }}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
+      ]}
+    >
       {cart.length === 0 ? (
-        <View className="flex-1 justify-center items-center">
-          <Text className={`text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Your cart is empty.</Text>
+        <View style={styles.emptyWrapper}>
+          <Text
+            style={[
+              styles.emptyText,
+              { color: isDarkMode ? "#9ca3af" : "#6b7280" },
+            ]}
+          >
+            Your cart is empty.
+          </Text>
         </View>
       ) : (
         <>
@@ -28,39 +40,56 @@ export const Cart = () => {
             data={[...cart].reverse()} // Reverse the array to show new items at the top
             keyExtractor={(item, index) => `${item.id}-${index}`}
             renderItem={({ item }) => (
-              <View className={`flex flex-row items-center py-4 px-4 ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} border-b`}>
+              <View
+                style={[
+                  styles.row,
+                  { borderBottomColor: isDarkMode ? "#374151" : "#e5e7eb" },
+                ]}
+              >
                 <Image
                   source={item.image}
-                  className="w-16 h-16 rounded-lg mr-4"
+                  style={styles.itemImage}
                   resizeMode="cover"
                 />
-                <View className="flex-1">
-                  <CustomText className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                <View style={styles.itemInfo}>
+                  <CustomText
+                    style={[
+                      styles.itemTitle,
+                      { color: isDarkMode ? "white" : "black" },
+                    ]}
+                  >
                     {item.title}
                   </CustomText>
-                  <CustomText className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>
+                  <CustomText
+                    style={{ color: isDarkMode ? "#9ca3af" : "#6b7280" }}
+                  >
                     ${item.price}
                   </CustomText>
                 </View>
-                <TouchableOpacity
-                  onPress={() => removeFromCart(Number(item.id))}
-                >
-                  <Ionicons name="trash-outline" size={24} color={isDarkMode ? '#ff4444' : 'red'} />
+                <TouchableOpacity onPress={() => removeFromCart(Number(item.id))}>
+                  <Ionicons
+                    name="trash-outline"
+                    size={24}
+                    color={isDarkMode ? "#ff4444" : "red"}
+                  />
                 </TouchableOpacity>
               </View>
             )}
             contentContainerStyle={{ paddingRight: 0 }}
           />
-          <View className={`p-4 ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`}>
+          <View
+            style={[
+              styles.footer,
+              { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
+            ]}
+          >
             <TouchableOpacity
-              className="bg-green-500 rounded-2xl p-4 flex flex-row items-center justify-center"
+              style={styles.checkoutButton}
               onPress={() => {
                 router.push("/checkout"); // Navigate to the checkout page
               }}
             >
-              <Text className="text-white text-lg ml-2">
-                Checkout: ${totalPrice}
-              </Text>
+              <Text style={styles.checkoutText}>Checkout: ${totalPrice}</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -70,3 +99,55 @@ export const Cart = () => {
 };
 
 export default Cart;
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 0,
+    flex: 1,
+    paddingRight: 0,
+  },
+  emptyWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    fontSize: 18,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+  },
+  itemImage: {
+    width: 64,
+    height: 64,
+    borderRadius: 8,
+    marginRight: 16,
+  },
+  itemInfo: {
+    flex: 1,
+  },
+  itemTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  footer: {
+    padding: 16,
+  },
+  checkoutButton: {
+    backgroundColor: "#22c55e",
+    borderRadius: 16,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  checkoutText: {
+    color: "white",
+    fontSize: 18,
+    marginLeft: 8,
+  },
+});

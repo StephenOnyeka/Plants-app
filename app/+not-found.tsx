@@ -8,7 +8,7 @@ export default function NotFoundScreen() {
         options={{ title: "Oops! Not Found", headerShown: false }}
       /> */}
       <View style={styles.container}>
-        <Link href={"/"} style={styles.button} className="" >
+        <Link href={"/"} style={styles.button}>
           Go back to Home screen!
         </Link>
       </View>

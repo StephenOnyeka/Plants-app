@@ -1,6 +1,5 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useContext } from "react";
-import CustomText from "@/components/CustomText";
 import { ThemeContext } from "../_layout";
 
 export default function Messages() {
@@ -8,16 +7,39 @@ export default function Messages() {
   const messages = []; // Assuming messages is an empty array for this example
 
   return (
-    <View className={`p-4 flex-1 justify-center items-center ${isDarkMode ? 'bg-dark-primary' : 'bg-white'}`}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
+      ]}
+    >
       {messages.length === 0 ? (
-        <Text className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
+        <Text
+          style={[
+            styles.emptyText,
+            { color: isDarkMode ? "#9ca3af" : "#6b7280" },
+          ]}
+        >
           You have no Messages!
         </Text>
       ) : (
         <View>
-          <Text className={isDarkMode ? 'text-white' : 'text-black'}>Messages</Text>
+          <Text style={{ color: isDarkMode ? "white" : "black" }}>Messages</Text>
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    textAlign: "center",
+    fontSize: 18,
+  },
+});
