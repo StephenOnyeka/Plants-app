@@ -90,7 +90,7 @@ export default function HomeScreen() {
                     size={30}
                     color={isDarkMode ? 'white' : 'black'}
                     className="rounded-full"
-                  /> */}{" "}
+                  /> */}
                   <ThemeToggle />
                   <View className="flex-row items-center gap-4">
                     {/* <ThemeToggle /> */}
