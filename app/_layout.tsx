@@ -1,10 +1,13 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { Ionicons, Fontisto } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
-import { Plant } from "@/constants/plantData";
+import { CartItem, Plant } from "@/constants/plantData";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useCart } from "@/hooks/useCart";
+import { getJSON, setJSON } from "@/utils/storage";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,12 +28,16 @@ export const FavoritesContext = createContext<{
 });
 
 export const CartContext = createContext<{
-  cart: Plant[];
+  cart: CartItem[];
   addToCart: (item: Plant) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
 }>({
   cart: [],
   addToCart: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
   removeFromCart: () => {},
 });
 
@@ -59,37 +66,32 @@ export default function RootLayout() {
   });
 
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [favorites, setFavorites] = useState<Plant[]>([]);
-  const [cart, setCart] = useState<Plant[]>([]);
+  const themeHydrated = useRef(false);
+  const { favorites, toggleFavorite } = useFavorites();
+  const {
+    cart,
+    addToCart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
+  } = useCart();
+
+  // Load persisted theme on mount.
+  useEffect(() => {
+    (async () => {
+      setIsDarkMode(await getJSON<boolean>("@theme", false));
+      themeHydrated.current = true;
+    })();
+  }, []);
+
+  // Persist theme after hydration.
+  useEffect(() => {
+    if (!themeHydrated.current) return;
+    setJSON("@theme", isDarkMode);
+  }, [isDarkMode]);
 
   const toggleTheme = () => {
-    setIsDarkMode(prev => !prev);
-  };
-
-  const toggleFavorite = (item: Plant) => {
-    setFavorites((prev) => {
-      if (prev.some((fav) => fav.id === item.id)) {
-        return prev.filter((fav) => fav.id !== item.id);
-      } else {
-        return [...prev, item];
-      }
-    });
-  };
-
-  const addToCart = (item: Plant) => {
-    setCart((prevCart) => [...prevCart, item]);
-  };
-
-  const removeFromCart = (id: number) => {
-    setCart((prevCart) => {
-      const index = prevCart.findIndex((item) => item.id === id);
-      if (index !== -1) {
-        const newCart = [...prevCart];
-        newCart.splice(index, 1);
-        return newCart;
-      }
-      return prevCart;
-    });
+    setIsDarkMode((prev) => !prev);
   };
 
   useEffect(() => {
@@ -105,7 +107,15 @@ export default function RootLayout() {
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
       <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        <CartContext.Provider
+          value={{
+            cart,
+            addToCart,
+            increaseQuantity,
+            decreaseQuantity,
+            removeFromCart,
+          }}
+        >
           <Stack
             initialRouteName="index"
             screenOptions={{

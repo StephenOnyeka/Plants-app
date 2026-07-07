@@ -7,13 +7,16 @@ import CustomText from "@/components/CustomText";
 import { useRouter } from "expo-router"; // Corrected import for useRouter
 
 export const Cart = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, increaseQuantity, decreaseQuantity, removeFromCart } =
+    useContext(CartContext);
   const { isDarkMode } = useContext(ThemeContext);
   const router = useRouter(); // Initialize router
 
   // Calculate total price using useMemo for performance optimization
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+    return cart
+      .reduce((sum, item) => sum + item.price * item.quantity, 0)
+      .toFixed(2);
   }, [cart]);
 
   return (
@@ -63,8 +66,48 @@ export const Cart = () => {
                   <CustomText
                     style={{ color: isDarkMode ? "#9ca3af" : "#6b7280" }}
                   >
-                    ${item.price}
+                    ${(item.price * item.quantity).toFixed(2)}
                   </CustomText>
+                  <View style={styles.stepper}>
+                    <TouchableOpacity
+                      onPress={() => decreaseQuantity(item.id)}
+                      style={[
+                        styles.stepperButton,
+                        {
+                          borderColor: isDarkMode ? "#4b5563" : "#d1d5db",
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name="remove"
+                        size={16}
+                        color={isDarkMode ? "white" : "black"}
+                      />
+                    </TouchableOpacity>
+                    <Text
+                      style={[
+                        styles.quantityText,
+                        { color: isDarkMode ? "white" : "black" },
+                      ]}
+                    >
+                      {item.quantity}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => increaseQuantity(item.id)}
+                      style={[
+                        styles.stepperButton,
+                        {
+                          borderColor: isDarkMode ? "#4b5563" : "#d1d5db",
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name="add"
+                        size={16}
+                        color={isDarkMode ? "white" : "black"}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 <TouchableOpacity onPress={() => removeFromCart(Number(item.id))}>
                   <Ionicons
@@ -133,6 +176,23 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 18,
     fontWeight: "600",
+  },
+  stepper: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+    gap: 12,
+  },
+  stepperButton: {
+    borderWidth: 1,
+    borderRadius: 9999,
+    padding: 4,
+  },
+  quantityText: {
+    fontSize: 16,
+    fontWeight: "600",
+    minWidth: 20,
+    textAlign: "center",
   },
   footer: {
     padding: 16,

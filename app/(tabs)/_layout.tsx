@@ -3,33 +3,26 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, StyleSheet } from "react-native";
 import CustomText from "@/components/CustomText";
-import { useContext, useMemo, useState, useEffect } from "react";
+import { useContext, useMemo } from "react";
 import { CartContext, FavoritesContext, ThemeContext } from "@/app/_layout";
 
 export default function TabsLayout() {
   const { cart } = useContext(CartContext);
   const { favorites } = useContext(FavoritesContext);
   const { isDarkMode } = useContext(ThemeContext);
-  const [cartNotification, setCartNotification] = useState(0);
-  const [favoriteNotification, setFavoriteNotification] = useState(0);
+
+  // Total item count across all cart lines (sum of quantities).
+  const cartCount = useMemo(
+    () => cart.reduce((sum, item) => sum + item.quantity, 0),
+    [cart]
+  );
 
   // Calculate total price using useMemo for performance optimization
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+    return cart
+      .reduce((sum, item) => sum + item.price * item.quantity, 0)
+      .toFixed(2);
   }, [cart]);
-
-  // Update notifications when cart or favorites change
-  useEffect(() => {
-    if (cart.length > 0) {
-      setCartNotification(prev => prev + 1);
-    }
-  }, [cart.length]);
-
-  useEffect(() => {
-    if (favorites.length > 0) {
-      setFavoriteNotification(prev => prev + 1);
-    }
-  }, [favorites.length]);
 
   return (
     <>
@@ -91,9 +84,9 @@ export default function TabsLayout() {
                   size={24}
                   color={color}
                 />
-                {favoriteNotification > 0 && (
+                {favorites.length > 0 && (
                   <View style={styles.badge}>
-                    <Text style={styles.badgeText}>{favoriteNotification}</Text>
+                    <Text style={styles.badgeText}>{favorites.length}</Text>
                   </View>
                 )}
               </View>
@@ -101,9 +94,6 @@ export default function TabsLayout() {
             headerTitle: () => (
               <CustomText style={[styles.headerTitle, { color: isDarkMode ? 'white' : 'black' }]}>Favourites</CustomText>
             ),
-          }}
-          listeners={{
-            focus: () => setFavoriteNotification(0),
           }}
         />
         <Tabs.Screen
@@ -117,9 +107,9 @@ export default function TabsLayout() {
                   size={24}
                   color={color}
                 />
-                {cartNotification > 0 && (
+                {cartCount > 0 && (
                   <View style={styles.badge}>
-                    <Text style={styles.badgeText}>{cartNotification}</Text>
+                    <Text style={styles.badgeText}>{cartCount}</Text>
                   </View>
                 )}
               </View>
@@ -132,9 +122,6 @@ export default function TabsLayout() {
                 </CustomText>
               </View>
             ),
-          }}
-          listeners={{
-            focus: () => setCartNotification(0),
           }}
         />
         <Tabs.Screen

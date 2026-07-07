@@ -8,6 +8,8 @@ export type Plant = {
   price: number;
 };
 
+export type CartItem = Plant & { quantity: number };
+
 const plantData: Plant[] = [
   {
     id: 1,
