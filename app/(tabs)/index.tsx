@@ -41,7 +41,7 @@ export default function HomeScreen() {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
       filtered = filtered.filter(
-        product => 
+        product =>
           product.title.toLowerCase().includes(query) ||
           product.description.toLowerCase().includes(query)
       );
@@ -76,377 +76,569 @@ export default function HomeScreen() {
   };
 
   return (
-    <>
-      <SafeAreaView
-        className={`${isDarkMode ? "bg-dark-primary" : "bg-white"}`}
-      >
-        <View className="px-4">
-          <FlatList
-            ListHeaderComponent={
-              <View className="flex flex-col gap-y-4 py-4">
-                <View style={styles.container}>
-                  {/* <Ionicons
-                    name="menu-outline"
+    <SafeAreaView
+      style={{ backgroundColor: isDarkMode ? "#1a1a1a" : "white" }}
+    >
+      <View style={styles.screenPadding}>
+        <FlatList
+          ListHeaderComponent={
+            <View style={styles.header}>
+              <View style={styles.container}>
+                <ThemeToggle />
+                <View style={styles.profileRow}>
+                  <Ionicons
+                    name="person-circle"
                     size={30}
-                    color={isDarkMode ? 'white' : 'black'}
-                    className="rounded-full"
-                  /> */}
-                  <ThemeToggle />
-                  <View className="flex-row items-center gap-4">
-                    {/* <ThemeToggle /> */}
-                    <Ionicons
-                      name="person-circle"
-                      size={30}
-                      color={isDarkMode ? "white" : "black"}
-                      className="rounded-full"
-                    />
-                  </View>
+                    color={isDarkMode ? "white" : "black"}
+                  />
                 </View>
-                <View className="flex-1">
-                  <CustomText
-                    className={`text-4xl font-PoppinsSemiBold ${
-                      isDarkMode ? "text-white" : "text-black"
-                    }`}
-                  >
-                    Top Picks
-                  </CustomText>
-                </View>
-
-                <View
-                  className={`${
-                    isDarkMode ? "bg-dark-secondary" : "bg-gray-200"
-                  } rounded-xl p-2 px-6 flex-row items-center mx-2`}
-                  style={{
-                    justifyContent: "space-between",
-                  }}
+              </View>
+              <View style={styles.flex1}>
+                <CustomText
+                  style={[
+                    styles.topPicks,
+                    { color: isDarkMode ? "white" : "black" },
+                  ]}
                 >
-                  <Ionicons
-                    name="search-outline"
-                    size={20}
-                    color={isDarkMode ? "#a0a0a0" : "#9ca3af"}
-                  />
-                  <TextInput
-                    placeholder="Search Product"
-                    placeholderClassName="font-Poppins"
-                    className={`font-Poppins text-base py-2 ${
-                      isDarkMode ? "text-white" : "text-black"
-                    }`}
-                    style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      marginHorizontal: 12,
-                    }}
-                    placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                  />
-                  <Ionicons
-                    name="mic-outline"
-                    size={20}
-                    color={isDarkMode ? "#a0a0a0" : "#9ca3af"}
-                  />
-                </View>
-                <View>
-                  <FlatList
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    data={categories}
-                    className="overflow-visible font-Poppins"
-                    renderItem={({ item }) => {
-                      let isActive = item.id === activeCategory;
-                      let activeTextClass = isActive
-                        ? "text-white"
-                        : isDarkMode
-                        ? "text-gray-300"
-                        : "text-gray-700";
-                      return (
-                        <TouchableOpacity
-                          onPress={() => setActiveCategory(item.id)}
-                          style={{
+                  Top Picks
+                </CustomText>
+              </View>
+
+              <View
+                style={[
+                  styles.searchBar,
+                  { backgroundColor: isDarkMode ? "#2d2d2d" : "#e5e7eb" },
+                ]}
+              >
+                <Ionicons
+                  name="search-outline"
+                  size={20}
+                  color={isDarkMode ? "#a0a0a0" : "#9ca3af"}
+                />
+                <TextInput
+                  placeholder="Search Product"
+                  style={[
+                    styles.searchInput,
+                    { color: isDarkMode ? "white" : "black" },
+                  ]}
+                  placeholderTextColor={isDarkMode ? "#a0a0a0" : "#9ca3af"}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+                <Ionicons
+                  name="mic-outline"
+                  size={20}
+                  color={isDarkMode ? "#a0a0a0" : "#9ca3af"}
+                />
+              </View>
+              <View>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={categories}
+                  style={styles.categoryList}
+                  renderItem={({ item }) => {
+                    let isActive = item.id === activeCategory;
+                    let activeTextColor = isActive
+                      ? "white"
+                      : isDarkMode
+                      ? "#d1d5db"
+                      : "#374151";
+                    return (
+                      <TouchableOpacity
+                        onPress={() => setActiveCategory(item.id)}
+                        style={[
+                          styles.categoryPill,
+                          {
                             backgroundColor: isActive
                               ? "#15803d"
                               : isDarkMode
                               ? "#2d2d2d"
                               : "#00000012",
-                          }}
-                          className="p-2 px-5 rounded-full mr-2"
+                          },
+                        ]}
+                      >
+                        <CustomText
+                          style={[
+                            styles.categoryText,
+                            { color: activeTextColor },
+                          ]}
                         >
-                          <CustomText
-                            className={`font-PoppinsSemiBold ${activeTextClass}`}
-                          >
-                            {item.title}
-                          </CustomText>
-                        </TouchableOpacity>
-                      );
-                    }}
-                  />
-                </View>
-                <View className="pt-4">
-                  <CustomText
-                    className={`text-xl ${
-                      isDarkMode ? "text-green-400" : "text-green-700"
-                    }`}
-                  >
-                    Recommended
-                  </CustomText>
-                </View>
-                <View
-                  className={`${
-                    isDarkMode ? "bg-dark-secondary" : "bg-green-500/20"
-                  } rounded-3xl flex flex-row gap-4 items-center p-4 mb-2`}
-                >
-                  <Image
-                    source={require("@/assets/plants/5.jpeg")}
-                    className="rounded-2xl size-28"
-                  />
-                  <View className="flex-1">
-                    <View className="flex flex-row justify-between items-center">
-                      <CustomText
-                        className={`text-2xl ${
-                          isDarkMode ? "text-white" : "text-black"
-                        }`}
-                        style={{ fontFamily: "PoppinsSemiBold" }}
-                      >
-                        Cactus
-                      </CustomText>
-                      <CustomText
-                        className={`text-2xl font-semibold ${
-                          isDarkMode ? "text-white" : "text-black"
-                        }`}
-                      >
-                        $64
-                      </CustomText>
-                    </View>
-                    <CustomText
-                      className={`mt-2 ${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}
-                      style={{ fontFamily: "Poppins" }}
-                    >
-                      Category: Outdoor
-                    </CustomText>
-                    <View className="flex flex-row items-center justify-between mt-2">
-                      <View
-                        className={`flex flex-row items-center gap-2 font-bold ${
-                          isDarkMode ? "bg-dark-primary" : "bg-gray-200"
-                        } rounded-full p-2 px-4`}
-                      >
-                        <Ionicons
-                          name="star"
-                          size={12}
-                          color={isDarkMode ? "#f5dd4b" : "#6b7280"}
-                        />
-                        <Text
-                          className={isDarkMode ? "text-white" : "text-black"}
-                        >
-                          4.7
-                        </Text>
-                      </View>
-                      <TouchableOpacity
-                        className={`border ${
-                          isDarkMode ? "border-gray-600" : "border-gray-300"
-                        } rounded-full p-2`}
-                      >
-                        <Fontisto
-                          name="plus-a"
-                          size={16}
-                          color={isDarkMode ? "white" : "black"}
-                        />
+                          {item.title}
+                        </CustomText>
                       </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            }
-            ListFooterComponent={
-              <View className="mt-8 mb-4">
-                <CustomText
-                  className={`text-2xl font-PoppinsSemiBold mb-4 ${
-                    isDarkMode ? "text-white" : "text-black"
-                  }`}
-                >
-                  You Might Also Like
-                </CustomText>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={randomProducts}
-                  keyExtractor={(item) => item.id.toString()}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      onPress={() => handleProductClick(item)}
-                      className="mr-4 w-40"
-                    >
-                      <View
-                        className={`${
-                          isDarkMode ? "bg-dark-secondary" : "bg-white"
-                        } rounded-2xl overflow-hidden ${
-                          isDarkMode ? "border-dark-border" : "border-gray-200"
-                        } border`}
-                      >
-                        <ImageBackground
-                          source={item.image}
-                          resizeMode="contain"
-                          className="h-32 w-full rounded-2xl bg-white"
-                        >
-                          <TouchableOpacity
-                            onPress={() => handleToggleFavorite(item)}
-                            style={{ position: "absolute", top: 8, right: 8 }}
-                          >
-                            <Ionicons
-                              name={
-                                favorites.some((fav) => fav.id === item.id)
-                                  ? "heart-sharp"
-                                  : "heart-outline"
-                              }
-                              size={20}
-                              color={"green"}
-                            />
-                          </TouchableOpacity>
-                        </ImageBackground>
-                        <View className="p-2">
-                          <CustomText
-                            className={`text-sm ${
-                              isDarkMode ? "text-gray-400" : "text-gray-500"
-                            }`}
-                          >
-                            {item.category}
-                          </CustomText>
-                          <CustomText
-                            className={`text-base ${
-                              isDarkMode ? "text-white" : "text-black"
-                            }`}
-                            style={{ fontFamily: "PoppinsSemiBold" }}
-                          >
-                            {item.title}
-                          </CustomText>
-                          <View className="flex-row items-center justify-between mt-1">
-                            <CustomText
-                              className={
-                                isDarkMode ? "text-green-400" : "text-green-600"
-                              }
-                            >
-                              ${item.price}
-                            </CustomText>
-                            <View className="flex-row items-center">
-                              <Ionicons
-                                name="star"
-                                size={12}
-                                color={isDarkMode ? "#f5dd4b" : "#6b7280"}
-                              />
-                              <Text
-                                className={`${
-                                  isDarkMode ? "text-gray-400" : "text-gray-500"
-                                } text-xs ml-1`}
-                              >
-                                {item.stars}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  )}
+                    );
+                  }}
                 />
               </View>
-            }
-            data={filteredProducts}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => handleProductClick(item)}
-                className={`rounded-2xl overflow-hidden w-[48%] mb-4 ${
-                  isDarkMode ? "border-dark-border" : "border-gray-200"
-                } border`}
+              <View style={styles.recommendedWrapper}>
+                <CustomText
+                  style={[
+                    styles.recommendedText,
+                    { color: isDarkMode ? "#4ade80" : "#15803d" },
+                  ]}
+                >
+                  Recommended
+                </CustomText>
+              </View>
+              <View
+                style={[
+                  styles.recommendedCard,
+                  {
+                    backgroundColor: isDarkMode
+                      ? "#2d2d2d"
+                      : "rgba(34,197,94,0.2)",
+                  },
+                ]}
               >
-                <View className={`w-full bg-white rounded-2xl`}>
-                  <ImageBackground
-                    source={item.image}
-                    resizeMode="contain"
-                    className="size-44 w-full rounded-2xl"
-                  >
-                    <TouchableOpacity
-                      onPress={() => handleToggleFavorite(item)}
-                      style={{ position: "absolute", top: 8, right: 8 }}
-                    >
-                      <Ionicons
-                        name={
-                          favorites.some((fav) => fav.id === item.id)
-                            ? "heart-sharp"
-                            : "heart-outline"
-                        }
-                        size={24}
-                        color={"green"}
-                      />
-                    </TouchableOpacity>
-                  </ImageBackground>
-                </View>
-                <View className="p-2 w-full">
-                  <View className="flex flex-row items-center justify-between">
+                <Image
+                  source={require("@/assets/plants/5.jpeg")}
+                  style={styles.recommendedImage}
+                />
+                <View style={styles.flex1}>
+                  <View style={styles.recommendedTitleRow}>
                     <CustomText
-                      className={`rounded-full text-sm ${
-                        isDarkMode ? "text-gray-400" : "text-gray-500"
-                      }`}
+                      style={[
+                        styles.recommendedName,
+                        { color: isDarkMode ? "white" : "black" },
+                      ]}
                     >
-                      {item.category}
+                      Cactus
                     </CustomText>
-                    <View className="flex flex-row items-center gap-1 font-bold rounded-full p-2">
+                    <CustomText
+                      style={[
+                        styles.recommendedPrice,
+                        { color: isDarkMode ? "white" : "black" },
+                      ]}
+                    >
+                      $64
+                    </CustomText>
+                  </View>
+                  <CustomText
+                    style={[
+                      styles.recommendedCategory,
+                      { color: isDarkMode ? "#d1d5db" : "#4b5563" },
+                    ]}
+                  >
+                    Category: Outdoor
+                  </CustomText>
+                  <View style={styles.recommendedFooter}>
+                    <View
+                      style={[
+                        styles.starPill,
+                        {
+                          backgroundColor: isDarkMode ? "#1a1a1a" : "#e5e7eb",
+                        },
+                      ]}
+                    >
                       <Ionicons
                         name="star"
                         size={12}
                         color={isDarkMode ? "#f5dd4b" : "#6b7280"}
                       />
                       <Text
-                        className={
-                          isDarkMode ? "text-gray-400" : "text-gray-500"
-                        }
+                        style={{ color: isDarkMode ? "white" : "black" }}
                       >
-                        {item.stars}
+                        4.7
                       </Text>
                     </View>
+                    <TouchableOpacity
+                      style={[
+                        styles.plusButton,
+                        { borderColor: isDarkMode ? "#4b5563" : "#d1d5db" },
+                      ]}
+                    >
+                      <Fontisto
+                        name="plus-a"
+                        size={16}
+                        color={isDarkMode ? "white" : "black"}
+                      />
+                    </TouchableOpacity>
                   </View>
-                  <CustomText
-                    className={isDarkMode ? "text-white" : "text-black"}
-                    style={{ fontFamily: "PoppinsSemiBold" }}
-                  >
-                    {item.title}
-                  </CustomText>
-                  <CustomText
-                    className={isDarkMode ? "text-white" : "text-black"}
-                  >
-                    ${item.price}
-                  </CustomText>
                 </View>
-              </TouchableOpacity>
-            )}
-            numColumns={2}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
-            showsVerticalScrollIndicator={false}
-            nestedScrollEnabled={true}
-          />
-        </View>
-      </SafeAreaView>
-    </>
+              </View>
+            </View>
+          }
+          ListFooterComponent={
+            <View style={styles.footer}>
+              <CustomText
+                style={[
+                  styles.footerTitle,
+                  { color: isDarkMode ? "white" : "black" },
+                ]}
+              >
+                You Might Also Like
+              </CustomText>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={randomProducts}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => handleProductClick(item)}
+                    style={styles.likeCard}
+                  >
+                    <View
+                      style={[
+                        styles.likeCardInner,
+                        {
+                          backgroundColor: isDarkMode ? "#2d2d2d" : "white",
+                          borderColor: isDarkMode ? "#3d3d3d" : "#e5e7eb",
+                        },
+                      ]}
+                    >
+                      <ImageBackground
+                        source={item.image}
+                        resizeMode="contain"
+                        style={styles.likeCardImage}
+                      >
+                        <TouchableOpacity
+                          onPress={() => handleToggleFavorite(item)}
+                          style={styles.favIcon}
+                        >
+                          <Ionicons
+                            name={
+                              favorites.some((fav) => fav.id === item.id)
+                                ? "heart-sharp"
+                                : "heart-outline"
+                            }
+                            size={20}
+                            color={"green"}
+                          />
+                        </TouchableOpacity>
+                      </ImageBackground>
+                      <View style={styles.likeCardBody}>
+                        <CustomText
+                          style={[
+                            styles.likeCategory,
+                            { color: isDarkMode ? "#9ca3af" : "#6b7280" },
+                          ]}
+                        >
+                          {item.category}
+                        </CustomText>
+                        <CustomText
+                          style={[
+                            styles.likeTitle,
+                            { color: isDarkMode ? "white" : "black" },
+                          ]}
+                        >
+                          {item.title}
+                        </CustomText>
+                        <View style={styles.likeFooter}>
+                          <CustomText
+                            style={{
+                              color: isDarkMode ? "#4ade80" : "#16a34a",
+                            }}
+                          >
+                            ${item.price}
+                          </CustomText>
+                          <View style={styles.likeStars}>
+                            <Ionicons
+                              name="star"
+                              size={12}
+                              color={isDarkMode ? "#f5dd4b" : "#6b7280"}
+                            />
+                            <Text
+                              style={[
+                                styles.likeStarText,
+                                { color: isDarkMode ? "#9ca3af" : "#6b7280" },
+                              ]}
+                            >
+                              {item.stars}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          }
+          data={filteredProducts}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => handleProductClick(item)}
+              style={[
+                styles.gridCard,
+                { borderColor: isDarkMode ? "#3d3d3d" : "#e5e7eb" },
+              ]}
+            >
+              <View style={styles.gridImageWrapper}>
+                <ImageBackground
+                  source={item.image}
+                  resizeMode="contain"
+                  style={styles.gridImage}
+                >
+                  <TouchableOpacity
+                    onPress={() => handleToggleFavorite(item)}
+                    style={styles.favIcon}
+                  >
+                    <Ionicons
+                      name={
+                        favorites.some((fav) => fav.id === item.id)
+                          ? "heart-sharp"
+                          : "heart-outline"
+                      }
+                      size={24}
+                      color={"green"}
+                    />
+                  </TouchableOpacity>
+                </ImageBackground>
+              </View>
+              <View style={styles.gridBody}>
+                <View style={styles.gridTopRow}>
+                  <CustomText
+                    style={[
+                      styles.gridCategory,
+                      { color: isDarkMode ? "#9ca3af" : "#6b7280" },
+                    ]}
+                  >
+                    {item.category}
+                  </CustomText>
+                  <View style={styles.gridStars}>
+                    <Ionicons
+                      name="star"
+                      size={12}
+                      color={isDarkMode ? "#f5dd4b" : "#6b7280"}
+                    />
+                    <Text
+                      style={{ color: isDarkMode ? "#9ca3af" : "#6b7280" }}
+                    >
+                      {item.stars}
+                    </Text>
+                  </View>
+                </View>
+                <CustomText
+                  style={[
+                    styles.gridTitle,
+                    { color: isDarkMode ? "white" : "black" },
+                  ]}
+                >
+                  {item.title}
+                </CustomText>
+                <CustomText
+                  style={{ color: isDarkMode ? "white" : "black" }}
+                >
+                  ${item.price}
+                </CustomText>
+              </View>
+            </TouchableOpacity>
+          )}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screenPadding: {
+    paddingHorizontal: 16,
+  },
+  header: {
+    flexDirection: "column",
+    rowGap: 16,
+    paddingVertical: 16,
+  },
   container: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  textInput: {
-    display: "flex",
+  profileRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  flex1: {
+    flex: 1,
+  },
+  topPicks: {
+    fontSize: 36,
+    fontFamily: "PoppinsSemiBold",
+  },
+  searchBar: {
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 8,
+    justifyContent: "space-between",
+  },
+  searchInput: {
+    fontFamily: "Poppins",
+    fontSize: 16,
+    paddingVertical: 8,
+    flex: 1,
+    justifyContent: "center",
+    marginHorizontal: 12,
+  },
+  categoryList: {
+    overflow: "visible",
+  },
+  categoryPill: {
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 9999,
+    marginRight: 8,
+  },
+  categoryText: {
+    fontFamily: "PoppinsSemiBold",
+  },
+  recommendedWrapper: {
+    paddingTop: 16,
+  },
+  recommendedText: {
+    fontSize: 20,
+  },
+  recommendedCard: {
+    borderRadius: 24,
+    flexDirection: "row",
+    gap: 16,
+    alignItems: "center",
+    padding: 16,
+    marginBottom: 8,
+  },
+  recommendedImage: {
+    borderRadius: 16,
+    width: 112,
+    height: 112,
+  },
+  recommendedTitleRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    gap: 8,
   },
-  text: {
+  recommendedName: {
+    fontSize: 24,
     fontFamily: "PoppinsSemiBold",
+  },
+  recommendedPrice: {
+    fontSize: 24,
+    fontWeight: "600",
+  },
+  recommendedCategory: {
+    marginTop: 8,
+    fontFamily: "Poppins",
+  },
+  recommendedFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+  starPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    borderRadius: 9999,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  plusButton: {
+    borderWidth: 1,
+    borderRadius: 9999,
+    padding: 8,
+  },
+  footer: {
+    marginTop: 32,
+    marginBottom: 16,
+  },
+  footerTitle: {
+    fontSize: 24,
+    fontFamily: "PoppinsSemiBold",
+    marginBottom: 16,
+  },
+  likeCard: {
+    marginRight: 16,
+    width: 160,
+  },
+  likeCardInner: {
+    borderRadius: 16,
+    overflow: "hidden",
+    borderWidth: 1,
+  },
+  likeCardImage: {
+    height: 128,
+    width: "100%",
+    borderRadius: 16,
+    backgroundColor: "white",
+  },
+  favIcon: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+  },
+  likeCardBody: {
+    padding: 8,
+  },
+  likeCategory: {
+    fontSize: 14,
+  },
+  likeTitle: {
     fontSize: 16,
-    color: "#000",
+    fontFamily: "PoppinsSemiBold",
+  },
+  likeFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 4,
+  },
+  likeStars: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  likeStarText: {
+    fontSize: 12,
+    marginLeft: 4,
+  },
+  gridCard: {
+    borderRadius: 16,
+    overflow: "hidden",
+    width: "48%",
+    marginBottom: 16,
+    borderWidth: 1,
+  },
+  gridImageWrapper: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 16,
+  },
+  gridImage: {
+    width: "100%",
+    height: 176,
+    borderRadius: 16,
+  },
+  gridBody: {
+    padding: 8,
+    width: "100%",
+  },
+  gridTopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  gridCategory: {
+    borderRadius: 9999,
+    fontSize: 14,
+  },
+  gridStars: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    borderRadius: 9999,
+    padding: 8,
+  },
+  gridTitle: {
+    fontFamily: "PoppinsSemiBold",
   },
 });

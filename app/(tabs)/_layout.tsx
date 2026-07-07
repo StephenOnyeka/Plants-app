@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import CustomText from "@/components/CustomText";
 import { useContext, useMemo, useState, useEffect } from "react";
 import { CartContext, FavoritesContext, ThemeContext } from "@/app/_layout";
@@ -75,7 +75,7 @@ export default function TabsLayout() {
               />
             ),
             headerTitle: () => (
-              <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Connections</CustomText>
+              <CustomText style={[styles.headerTitle, { color: isDarkMode ? 'white' : 'black' }]}>Connections</CustomText>
             ),
           }}
         />
@@ -92,14 +92,14 @@ export default function TabsLayout() {
                   color={color}
                 />
                 {favoriteNotification > 0 && (
-                  <View className={`absolute -top-1 -right-1 ${isDarkMode ? 'bg-red-500' : 'bg-red-500'} rounded-full w-4 h-4 items-center justify-center`}>
-                    <Text className="text-white text-xs">{favoriteNotification}</Text>
+                  <View style={styles.badge}>
+                    <Text style={styles.badgeText}>{favoriteNotification}</Text>
                   </View>
                 )}
               </View>
             ),
             headerTitle: () => (
-              <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Favourites</CustomText>
+              <CustomText style={[styles.headerTitle, { color: isDarkMode ? 'white' : 'black' }]}>Favourites</CustomText>
             ),
           }}
           listeners={{
@@ -118,16 +118,16 @@ export default function TabsLayout() {
                   color={color}
                 />
                 {cartNotification > 0 && (
-                  <View className={`absolute -top-1 -right-1 ${isDarkMode ? 'bg-red-500' : 'bg-red-500'} rounded-full w-4 h-4 items-center justify-center`}>
-                    <Text className="text-white text-xs">{cartNotification}</Text>
+                  <View style={styles.badge}>
+                    <Text style={styles.badgeText}>{cartNotification}</Text>
                   </View>
                 )}
               </View>
             ),
             headerTitle: () => (
-              <View className="flex flex-row justify-between items-center w-full">
-                <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Your Cart</CustomText>
-                <CustomText className={`text-lg font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              <View style={styles.cartHeader}>
+                <CustomText style={[styles.headerTitle, { color: isDarkMode ? 'white' : 'black' }]}>Your Cart</CustomText>
+                <CustomText style={[styles.cartTotal, { color: isDarkMode ? '#d1d5db' : '#374151' }]}>
                   Total: ${totalPrice}
                 </CustomText>
               </View>
@@ -149,7 +149,7 @@ export default function TabsLayout() {
               />
             ),
             headerTitle: () => (
-              <CustomText className={`text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>Messages</CustomText>
+              <CustomText style={[styles.headerTitle, { color: isDarkMode ? 'white' : 'black' }]}>Messages</CustomText>
             ),
           }}
         />
@@ -158,3 +158,34 @@ export default function TabsLayout() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  headerTitle: {
+    fontSize: 24,
+  },
+  badge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    backgroundColor: "#ef4444",
+    borderRadius: 9999,
+    width: 16,
+    height: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    color: "white",
+    fontSize: 12,
+  },
+  cartHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  cartTotal: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+});

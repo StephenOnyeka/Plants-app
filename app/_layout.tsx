@@ -4,7 +4,6 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { Ionicons, Fontisto } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
-import "../global.css";
 import { Plant } from "@/constants/plantData";
 
 SplashScreen.preventAutoHideAsync();
