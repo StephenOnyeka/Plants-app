@@ -5,3 +5,7 @@ Here's are the changes I made on this project:
 - Modified and optimized the whole project for production.
 
 - Persistence + Real cart.
+
+Slice 1: Persistence + Real Cart.
+Slice 2: Richer product pages.
+Slice 3:
