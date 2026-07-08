@@ -86,6 +86,13 @@ export default function HomeScreen() {
               <View style={styles.container}>
                 <ThemeToggle />
                 <View style={styles.profileRow}>
+                  <TouchableOpacity onPress={() => router.push("/orders")}>
+                    <Ionicons
+                      name="receipt-outline"
+                      size={28}
+                      color={isDarkMode ? "white" : "black"}
+                    />
+                  </TouchableOpacity>
                   <Ionicons
                     name="person-circle"
                     size={30}

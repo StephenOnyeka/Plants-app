@@ -64,11 +64,16 @@ export function useCart() {
     setCart((prev) => prev.filter((c) => c.id !== id));
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return {
     cart,
     addToCart,
     increaseQuantity,
     decreaseQuantity,
     removeFromCart,
+    clearCart,
   };
 }

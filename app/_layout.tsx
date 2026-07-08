@@ -7,6 +7,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { CartItem, Plant } from "@/constants/plantData";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useCart } from "@/hooks/useCart";
+import { useOrders, Order } from "@/hooks/useOrders";
 import { getJSON, setJSON } from "@/utils/storage";
 
 SplashScreen.preventAutoHideAsync();
@@ -33,12 +34,22 @@ export const CartContext = createContext<{
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
 }>({
   cart: [],
   addToCart: () => {},
   increaseQuantity: () => {},
   decreaseQuantity: () => {},
   removeFromCart: () => {},
+  clearCart: () => {},
+});
+
+export const OrdersContext = createContext<{
+  orders: Order[];
+  placeOrder: (cart: CartItem[], bank: string) => Order;
+}>({
+  orders: [],
+  placeOrder: () => ({ id: "", date: 0, items: [], total: 0, bank: "" }),
 });
 
 export default function RootLayout() {
@@ -74,7 +85,9 @@ export default function RootLayout() {
     increaseQuantity,
     decreaseQuantity,
     removeFromCart,
+    clearCart,
   } = useCart();
+  const { orders, placeOrder } = useOrders();
 
   // Load persisted theme on mount.
   useEffect(() => {
@@ -114,31 +127,41 @@ export default function RootLayout() {
             increaseQuantity,
             decreaseQuantity,
             removeFromCart,
+            clearCart,
           }}
         >
-          <Stack
-            initialRouteName="index"
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: isDarkMode ? "#1a1a1a" : "white",
-              },
-              headerTintColor: isDarkMode ? "white" : "black",
-
-            }}
-          >
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-            <Stack.Screen
-              name="productDetails"
-              options={{ presentation: "modal", headerTitle: "" }}
-            />
-            <Stack.Screen
-              name="checkout"
-              options={{ presentation: "modal", headerTitle: "" }}
-            />
-          </Stack>
-          <StatusBar style={isDarkMode ? "light" : "dark"} />
+          <OrdersContext.Provider value={{ orders, placeOrder }}>
+            <Stack
+              initialRouteName="index"
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: isDarkMode ? "#1a1a1a" : "white",
+                },
+                headerTintColor: isDarkMode ? "white" : "black",
+              }}
+            >
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+              <Stack.Screen
+                name="productDetails"
+                options={{ presentation: "modal", headerTitle: "" }}
+              />
+              <Stack.Screen
+                name="checkout"
+                options={{ presentation: "modal", headerTitle: "" }}
+              />
+              <Stack.Screen
+                name="orderConfirmation"
+                options={{ headerShown: false, gestureEnabled: false }}
+              />
+              <Stack.Screen
+                name="orders"
+                options={{ headerTitle: "My Orders" }}
+              />
+            </Stack>
+            <StatusBar style={isDarkMode ? "light" : "dark"} />
+          </OrdersContext.Provider>
         </CartContext.Provider>
       </FavoritesContext.Provider>
     </ThemeContext.Provider>
