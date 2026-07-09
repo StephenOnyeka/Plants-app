@@ -6,7 +6,7 @@ import {
   ImageBackground,
   StyleSheet,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Star, ShoppingCart } from "lucide-react-native";
 import CustomText from "@/components/CustomText";
 
 type Plant = {
@@ -38,11 +38,11 @@ const RenderPlantCard = ({ item }: { item: Plant }) => {
         </CustomText>
         <View style={styles.footer}>
           <View style={styles.starPill}>
-            <Ionicons name="star" size={12} color={"green"} />
+            <Star size={12} color={"green"} fill={"green"} />
             <Text style={styles.starText}>{item.stars}</Text>
           </View>
           <TouchableOpacity style={styles.cartButton}>
-            <Ionicons name="cart-outline" size={20} color={"white"} />
+            <ShoppingCart size={20} color={"white"} />
           </TouchableOpacity>
         </View>
       </View>

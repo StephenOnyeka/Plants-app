@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useContext, useMemo } from "react"; // Import useMemo
 import { CartContext, ThemeContext } from "@/app/_layout";
 import { FlatList, Image, TouchableOpacity } from "react-native";
+import { Minus, Plus, Trash2 } from "lucide-react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomText from "@/components/CustomText";
 import { useRouter } from "expo-router"; // Corrected import for useRouter
@@ -78,8 +79,7 @@ export const Cart = () => {
                         },
                       ]}
                     >
-                      <Ionicons
-                        name="remove"
+                      <Minus
                         size={16}
                         color={isDarkMode ? "white" : "black"}
                       />

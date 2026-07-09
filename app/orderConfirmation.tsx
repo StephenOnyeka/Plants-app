@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { CircleCheckBig } from "lucide-react-native";
 import CustomText from "@/components/CustomText";
 import { OrdersContext, ThemeContext } from "./_layout";
 
@@ -22,7 +22,7 @@ export default function OrderConfirmation() {
     >
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.iconWrapper}>
-          <Ionicons name="checkmark-circle" size={96} color="#22c55e" />
+          <CircleCheckBig size={96} color="#22c55e" />
         </View>
         <CustomText
           style={[styles.title, { color: isDarkMode ? "white" : "black" }]}

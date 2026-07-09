@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity, StyleSheet } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
-import { Ionicons } from "@expo/vector-icons";
+import { Check } from "lucide-react-native";
 import { useRouter } from "expo-router";
 import { setJSON } from "@/utils/storage";
 
@@ -14,7 +14,7 @@ export default function OnboardingScreen() {
 
   const doneButton = () => (
     <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
-      <Ionicons name="checkmark" size={28} color="#15803d" />
+      <Check size={28} color="#15803d" />
     </TouchableOpacity>
   );
 

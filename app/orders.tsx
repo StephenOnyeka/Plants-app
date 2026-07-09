@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Receipt } from "lucide-react-native";
 import CustomText from "@/components/CustomText";
 import { OrdersContext, ThemeContext } from "./_layout";
 import { Order } from "@/hooks/useOrders";
@@ -29,8 +29,7 @@ export default function Orders() {
           { backgroundColor: isDarkMode ? "#1a1a1a" : "white" },
         ]}
       >
-        <Ionicons
-          name="receipt-outline"
+        <Receipt
           size={64}
           color={isDarkMode ? "#4b5563" : "#d1d5db"}
         />
