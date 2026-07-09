@@ -9,3 +9,4 @@ Here's are the changes I made on this project:
 Slice 1: Persistence + Real Cart.
 Slice 2: Richer product pages.
 Slice 3: Checkout + Orders.
+Slice 4: Fill the empty People/Messages + wire onboarding. (Filled screens + Onboarding wired).

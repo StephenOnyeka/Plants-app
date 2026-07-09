@@ -1,12 +1,31 @@
 import { View, Image, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import CustomText from "@/components/CustomText";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "./_layout";
+import { getJSON } from "@/utils/storage";
 
 export default function Index() {
   const { isDarkMode } = useContext(ThemeContext);
+  const router = useRouter();
+  const [checked, setChecked] = useState(false);
+
+  // First-time users are sent to onboarding; returning users see the landing.
+  useEffect(() => {
+    (async () => {
+      const onboarded = await getJSON<boolean>("@onboarded", false);
+      if (!onboarded) {
+        router.replace("/OnboardingScreen");
+      } else {
+        setChecked(true);
+      }
+    })();
+  }, []);
+
+  if (!checked) {
+    return <View style={styles.root} />;
+  }
 
   return (
     <View style={styles.root}>

@@ -2,17 +2,19 @@ import { Image, TouchableOpacity, StyleSheet } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { setJSON } from "@/utils/storage";
 
 export default function OnboardingScreen() {
   const router = useRouter();
 
-  const handleDone = () => {
-    router.push("/(tabs)");
+  const handleDone = async () => {
+    await setJSON("@onboarded", true);
+    router.replace("/(tabs)");
   };
 
   const doneButton = () => (
     <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
-      <Ionicons name="checkmark" size={30} />
+      <Ionicons name="checkmark" size={28} color="#15803d" />
     </TouchableOpacity>
   );
 
@@ -21,40 +23,46 @@ export default function OnboardingScreen() {
       onDone={handleDone}
       onSkip={handleDone}
       DoneButtonComponent={doneButton}
-      bottomBarColor="transparent"
+      bottomBarColor="#ffffff"
       pages={[
         {
-          backgroundColor: "purple",
+          backgroundColor: "#dcfce7",
           image: (
             <Image
-              source={require("../assets/images/icon.png")}
+              source={require("../assets/plants/9.jpeg")}
               style={styles.image}
+              resizeMode="contain"
             />
           ),
-          title: "Welcome to the App",
-          subtitle: "This is a simple onboarding screen",
+          title: "Find Your Perfect Plant",
+          subtitle:
+            "Browse a curated collection of indoor, outdoor, patio, and garden plants.",
         },
         {
-          backgroundColor: "#fff",
+          backgroundColor: "#fef9c3",
           image: (
             <Image
-              source={require("../assets/images/icon.png")}
+              source={require("../assets/plants/13.jpeg")}
               style={styles.image}
+              resizeMode="contain"
             />
           ),
-          title: "Welcome to the App",
-          subtitle: "This is a simple onboarding screen",
+          title: "Know How to Care",
+          subtitle:
+            "Every plant comes with light, water, and care details so it thrives at home.",
         },
         {
-          backgroundColor: "#fff",
+          backgroundColor: "#e0f2fe",
           image: (
             <Image
-              source={require("../assets/images/icon.png")}
+              source={require("../assets/plants/2.jpeg")}
               style={styles.image}
+              resizeMode="contain"
             />
           ),
-          title: "Welcome to the App",
-          subtitle: "This is a simple onboarding screen",
+          title: "Shop & Connect",
+          subtitle:
+            "Add to cart, check out securely, and join a community of plant lovers.",
         },
       ]}
     />
@@ -66,10 +74,12 @@ const styles = StyleSheet.create({
     padding: 8,
     marginRight: 16,
     borderWidth: 1,
+    borderColor: "#15803d",
     borderRadius: 9999,
   },
   image: {
-    width: "100%",
-    height: 400,
+    width: 300,
+    height: 300,
+    borderRadius: 24,
   },
 });
